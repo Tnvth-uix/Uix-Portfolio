@@ -1,7 +1,11 @@
 export const TEAM_LEAD = {
   name: "Marco Antonio González Morales",
   role: "Customer Success",
-  cv: null,
+  cv: {
+    title: "CV — Marco Antonio González Morales",
+    subtitle: "Customer Success",
+    url: "https://iytpfckxdikpqqzmstyp.supabase.co/storage/v1/object/public/business-case-images/Documentos/Marco_Gonzalez_CV.pdf",
+  },
 };
 
 export const TEAM_REPORTS = [
@@ -34,4 +38,6 @@ export const TEAM_REPORTS = [
   },
 ];
 
-export const TEAM_CV_DOCS = TEAM_REPORTS.filter((m) => m.cv).map((m) => m.cv);
+export const TEAM_CV_DOCS = [TEAM_LEAD, ...TEAM_REPORTS]
+  .filter((m) => m.cv)
+  .map((m) => m.cv);

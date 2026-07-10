@@ -21,19 +21,6 @@ export default function Footer() {
             México
           </p>
         </div>
-        <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <Link href="/projects">Proyectos</Link>
-            <a href="mailto:contacto@uixdesign.com">Contacto</a>
-            <a
-              href="https://github.com/Tnvth-uix/Uix-Portfolio"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
       </div>
       <div className="wrap ft-meta" style={{ marginTop: 40 }}>
         © {new Date().getFullYear()} Portafolio · By UIX · Todos los
