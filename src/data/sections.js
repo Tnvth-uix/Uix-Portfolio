@@ -19,7 +19,7 @@ export const SECTIONS = [
   {
     n: 5,
     href: "/experiencia-cx",
-    label: "Experiencia previa en proyectos de UX research y/o CX",
+    label: "Experiencia en el sector tecnológico, SaaS o telecomunicaciones",
   },
   {
     n: 6,
@@ -35,6 +35,6 @@ export const SECTIONS = [
   {
     n: 8,
     href: "/business-cases",
-    label: "Experiencia en el sector tecnológico, SaaS o telecomunicaciones",
+    label: "Experiencia previa en proyectos de UX research y/o CX",
   },
 ];
