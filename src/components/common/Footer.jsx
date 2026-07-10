@@ -9,7 +9,8 @@ export default function Footer() {
             UiX · Diseño UX/UI para la transformación digital
           </div>
           <h3>
-            Agenda tu <span className="grad-text">diagnóstico gratis</span>.
+            No diseñamos pantallas, diseñamos{" "}
+            <span className="grad-text">experiencia de usuario</span>.
           </h3>
           <div className="ft-contact">
             <a href="tel:+525597074674">+52 55 9707 4674</a>

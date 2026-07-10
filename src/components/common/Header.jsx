@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Header() {
+  const { mode } = useAuth();
+
   return (
     <header className="hd">
       <div className="wrap hd-inner">
@@ -13,10 +18,14 @@ export default function Header() {
         </Link>
         <nav className="hd-nav">
           <Link href="/projects">Business Cases</Link>
-          <Link href="/upload">Subir MD</Link>
-          <Link href="/upload" className="btn btn-grad hd-cta">
-            Nuevo Business Case
-          </Link>
+          {mode === "admin" && (
+            <>
+              <Link href="/upload">Subir MD</Link>
+              <Link href="/upload" className="btn btn-grad hd-cta">
+                Nuevo Business Case
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>
