@@ -440,6 +440,163 @@ Diseñar flujos conversacionales para tres tipos de clientes.
 
 `;
 
+export const ECOMMERCE_EKT = `# Ecommerce EKT
+
+---
+
+## 0. Portada / Índice
+- **Proyecto:** Ecommerce EKT — Solicitud de préstamo a través de una compra en elektra.mx
+- **Cliente/Portafolio:** UIX
+
+---
+
+## Bloque 1 — Datos Generales del Proyecto
+
+| Campo | Descripción |
+|---|---|
+| Cliente | Manuel Antonio Valera Alcalá |
+| Responsable(s) | Sofía Carbajal |
+| Nombre del proyecto | Solicitud de préstamo a través de una compra en elektra.mx |
+| Descripción general | Mejora de la experiencia de compra a préstamo destacando sus beneficios, modificando la Originación Única enfocada a consumo. Se optimizó además el dashboard de préstamo para ofrecer claridad sobre sus beneficios y posibilidades. |
+| Tipo de servicios incluidos | Diseño de experiencia UX · Diseño de interfaz UI · UX Writing · Diseño de servicios digitales · Pruebas de usabilidad |
+| Metodologías utilizadas | Design Thinking · Doble Diamante · Lean UX · Agile UX · Jobs to be Done · Diseño Centrado en el Usuario · Atomic Design |
+| Métodos y técnicas utilizados | A/B testing · Entrevistas de guerrilla · Shadowing · Tree testing · Pruebas de usabilidad moderadas y no moderadas · Eye tracking · Heatmaps |
+
+---
+
+## Bloque 2 — Objetivo y Reto
+
+- **Objetivo(s):** Motivar y enaltecer el préstamo, ofreciendo claridad al usuario sobre todo lo que puede hacer con él; competir directamente con los BNPL; facilitar el aumento de las compras a préstamo.
+- **Reto(s):** No se incentivaba desde la página de producto a comprar con préstamo. No existía un proceso de solicitud corto y enfocado en compras de ecommerce. No había un lugar donde el usuario pudiera gestionar de manera clara su crédito.
+
+---
+
+## Bloque 3 — Proceso del Proyecto
+
+**¿Qué nos pidieron?**
+Mejorar la experiencia de la compra a préstamo, desde la solicitud del préstamo, el surtimiento y la gestión del préstamo.
+
+**¿Cómo lo resolvimos?**
+Se mejoró la experiencia de compra a préstamo resaltando sus beneficios y motivando al cliente a pagar su compra de manera sencilla. Se ajustó la Originación Única para brindar retroalimentación en cada paso del proceso. Se optimizó el dashboard de préstamo para que el cliente descubra todos los beneficios de su préstamo.
+
+---
+
+## Bloque 4 — Resultados
+
+| Subcampo | Contenido |
+|---|---|
+| Resultado general | Flujo optimizado de compra a préstamo con mejora en conversión |
+| Usabilidad | Monitoreamos la claridad en cada paso del proceso |
+| Tiempos | Reducción significativa en pasos del flujo de solicitud |
+| Impacto de negocio | Aumento en compras a préstamo a través de ecommerce |
+
+`;
+
+export const ZEUS = `# ZEUS
+
+---
+
+## 0. Portada / Índice
+- **Proyecto:** ZEUS
+- **Cliente/Portafolio:** UIX
+
+---
+
+## Bloque 1 — Datos Generales del Proyecto
+
+| Campo | Descripción |
+|---|---|
+| Cliente | Guillermo Simonini |
+| Responsable(s) | Cristóbal Fiesco · Mayra Laguna |
+| Nombre del proyecto | ZEUS |
+| Descripción general | App que centraliza y automatiza procesos clave de Recursos Humanos y Operaciones, como la gestión de tareas, comunicación interna, formación y seguimiento del colaborador. Diseñada con un enfoque UX/UI intuitivo. |
+| Tipo de servicios incluidos | Diseño de experiencia UX · Diseño de interfaz UI · UX Writing · Diseño de servicios digitales · Pruebas de usabilidad |
+| Metodologías utilizadas | Design Thinking · Doble Diamante · Lean UX · Agile UX · Jobs to be Done · Diseño Centrado en el Usuario · Atomic Design |
+| Métodos y técnicas utilizados | A/B testing · Entrevistas de guerrilla · Shadowing · Card sorting · Pruebas de usabilidad moderadas y no moderadas · Eye tracking · Desirability testing |
+
+---
+
+## Bloque 2 — Objetivo y Reto
+
+- **Objetivo(s):** Tener una plataforma que ayude a mejorar la cultura, la productividad y el compromiso de los empleados, con una experiencia UX/UI fácil de usar y agradable.
+- **Reto(s):** Desarrollar un Sistema de Diseño desde cero. Diseñar soluciones escalables aplicables a múltiples empresas.
+
+---
+
+## Bloque 3 — Proceso del Proyecto
+
+**¿Qué nos pidieron?**
+Crear una aplicación móvil y un administrador web que fueran intuitivos, usables y con una interfaz homologada basada en la nueva identidad del producto digital.
+
+**¿Cómo lo resolvimos?**
+Con un Design System coherente y alineado a la nueva identidad visual. Con componentes modulares que permiten personalizaciones sin comprometer la consistencia. Con soluciones enfocadas en la escalabilidad, identificando patrones comunes.
+
+---
+
+## Bloque 4 — Resultados
+
+| Subcampo | Contenido |
+|---|---|
+| Resultado general | Design System completo con componentes modulares y reutilizables |
+| Usabilidad | Facilita el aprendizaje gracias a una identidad visual más clara y consistente |
+| Tiempos | Carga más rápida con micro-interacciones útiles |
+| Fidelización | Se incorporó feedback de usuarios en pruebas |
+| Impacto de negocio | Mejorar percepción de app entre colaboradores e incrementar frecuencia de uso |
+
+`;
+
+export const TORRE_DE_CONTROL = `# Torre de Control
+
+---
+
+## 0. Portada / Índice
+- **Proyecto:** Torre de Control
+- **Cliente/Portafolio:** UIX
+
+---
+
+## Bloque 1 — Datos Generales del Proyecto
+
+| Campo | Descripción |
+|---|---|
+| Cliente | Sistema de gestión de visitas |
+| Responsable(s) | Equipo de diseño UIX |
+| Nombre del proyecto | Torre de Control |
+| Descripción general | Aplicación móvil que facilita la gestión de visitas, reprogramación y confirmación de citas, con integración de mapas y captura de información de domicilios. |
+| Tipo de servicios incluidos | Diseño de experiencia UX · Diseño de interfaz UI · UX Writing · Pruebas de usabilidad |
+| Metodologías utilizadas | Design Thinking · Doble Diamante · Lean UX · Diseño Centrado en el Usuario |
+| Métodos y técnicas utilizados | Entrevistas de guerrilla · Pruebas de usabilidad · Contextual Inquiry |
+
+---
+
+## Bloque 2 — Objetivo y Reto
+
+- **Objetivo(s):** Optimizar la gestión de visitas mediante una interfaz intuitiva que facilite reprogramación, confirmación y captura de información de domicilios.
+- **Reto(s):** Crear flujos simples para reprogramar visitas, capturar ubicación exacta y validar domicilios en campo.
+
+---
+
+## Bloque 3 — Proceso del Proyecto
+
+**¿Qué nos pidieron?**
+Diseñar una app que permitiera gestionar visitas de manera eficiente en campo, con capacidad de reprogramar y confirmar citas.
+
+**¿Cómo lo resolvimos?**
+Creamos flujos simplificados con selección de fechas mediante calendario, opciones de disponibilidad por franja horaria, captura de ubicación mediante mapas, y formulario de validación de domicilios.
+
+---
+
+## Bloque 4 — Resultados
+
+| Subcampo | Contenido |
+|---|---|
+| Resultado general | App funcional con flujos optimizados para gestión de visitas en campo |
+| Usabilidad | Interfaz intuitiva que reduce fricción en reprogramación y confirmación |
+| Tiempos | Reducción de pasos innecesarios en flujo de captura |
+| Impacto de negocio | Mayor eficiencia en gestión de visitas |
+
+`;
+
 export const EXAMPLES = [
   AFILIACION_UNICA,
   RECLUTALIA,
@@ -449,4 +606,7 @@ export const EXAMPLES = [
   ORIGINACION_UNICA,
   COMPENSALIA,
   QUITAR_ANONIMATO,
+  ECOMMERCE_EKT,
+  ZEUS,
+  TORRE_DE_CONTROL,
 ];
