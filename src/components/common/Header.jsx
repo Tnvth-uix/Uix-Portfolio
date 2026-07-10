@@ -10,7 +10,7 @@ export default function Header() {
     <header className="hd">
       <div className="wrap hd-inner">
         <Link href="/" className="hd-logo">
-          <img src="/logo.png" alt="Logo" />
+          <img src="https://iytpfckxdikpqqzmstyp.supabase.co/storage/v1/object/public/business-case-images/logo.png" alt="Logo" />
           <span className="hd-word">
             Portafolio
           </span>

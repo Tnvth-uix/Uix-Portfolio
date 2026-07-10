@@ -33,7 +33,7 @@ export default function PasswordGate({ children }) {
       <Particles count={40} />
       <div className="gate-blob" />
       <form className="gate-card" onSubmit={submit}>
-        <img src="/logo.png" alt="" className="gate-logo" />
+        <img src="https://iytpfckxdikpqqzmstyp.supabase.co/storage/v1/object/public/business-case-images/logo.png" alt="" className="gate-logo" />
         <h1>
           Business <span className="grad-text">Cases</span>
         </h1>
