@@ -9,6 +9,12 @@ export default function PdfRepository({ docs }) {
     return <p className="pdf-empty">Aún no hay documentos cargados en este repositorio.</p>;
   }
 
+  const getPdfViewerUrl = (url) => {
+    // Usar Mozilla PDF.js viewer para mostrar PDFs
+    const pdfUrl = encodeURIComponent(url);
+    return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${pdfUrl}`;
+  };
+
   return (
     <div className="pdf-repo">
       <ul className="pdf-list">
@@ -36,7 +42,12 @@ export default function PdfRepository({ docs }) {
 
       <div className="pdf-viewer">
         {active ? (
-          <iframe key={active.url} src={active.url} title={active.title} />
+          <iframe
+            key={active.url}
+            src={getPdfViewerUrl(active.url)}
+            title={active.title}
+            loading="lazy"
+          />
         ) : (
           <p className="pdf-empty">Selecciona un documento para visualizarlo.</p>
         )}
