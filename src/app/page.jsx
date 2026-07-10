@@ -1,95 +1,96 @@
 "use client";
 
-export default function Home() {
-  return (
-    <div style={{ backgroundColor: "#283593", color: "#F3E5F5" }}>
-      <section style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-        textAlign: "center",
-      }}>
-        <h1 style={{
-          fontSize: "4rem",
-          fontWeight: "bold",
-          marginBottom: "1.5rem",
-          background: "linear-gradient(to right, #00E676, #00BFA5)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}>
-          UiX Portfolio
-        </h1>
-        <p style={{ fontSize: "1.25rem", marginBottom: "1rem", maxWidth: "600px" }}>
-          Presentaciones cinematográficas de proyectos UX/UI
-        </p>
-        <p style={{ color: "#E8EAF6", maxWidth: "600px" }}>
-          Explora una colección curada de trabajos de diseño, desde investigación y prototipado hasta métricas de impacto.
-        </p>
-        <a href="/projects" style={{
-          marginTop: "2rem",
-          padding: "0.75rem 2rem",
-          background: "linear-gradient(to right, #00E676, #00BFA5)",
-          color: "#283593",
-          fontWeight: "bold",
-          borderRadius: "0.5rem",
-          textDecoration: "none",
-          display: "inline-block",
-        }}>
-          Explorar Proyectos
-        </a>
-      </section>
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import DeckCard from "../components/DeckCard";
+import { getExamples, getUserDecks } from "../lib/store";
 
-      <section style={{
-        padding: "5rem 2rem",
-        backgroundColor: "#283593",
-      }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 style={{
-            fontSize: "2rem",
-            marginBottom: "3rem",
-            textAlign: "center",
-            color: "#00E676",
-          }}>
-            Últimos Proyectos
-          </h2>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "2rem",
-          }}>
-            {[1, 2, 3, 4].map((i) => (
-              <a key={i} href={`/projects/proyecto-${i}`} style={{
-                backgroundColor: "#4A148C",
-                padding: "1.5rem",
-                borderRadius: "0.5rem",
-                border: "1px solid #7B1FA2",
-                textDecoration: "none",
-                color: "#F3E5F5",
-              }}>
-                <div style={{
-                  aspectRatio: "16/9",
-                  backgroundColor: "#7B1FA2",
-                  borderRadius: "0.5rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "1rem",
-                  color: "#F3E5F5",
-                }}>
-                  Proyecto {i}
-                </div>
-                <p style={{ color: "#00E676", fontSize: "0.875rem", fontWeight: "600" }}>Cliente {String.fromCharCode(64 + i)}</p>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#F3E5F5" }}>
-                  Proyecto {i}
-                </h3>
-              </a>
-            ))}
+export default function Home() {
+  const [decks, setDecks] = useState(getExamples());
+
+  useEffect(() => {
+    setDecks([...getExamples(), ...getUserDecks()]);
+  }, []);
+
+  return (
+    <main>
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-blob">
+          <span className="b1" />
+          <span className="b2" />
+        </div>
+        <div className="wrap">
+          <div className="eyebrow">Portafolio de presentaciones · UX/UI</div>
+          <h1 className="display">
+            Reportes que se
+            <br />
+            leen como <span className="grad-text">cine</span>.
+          </h1>
+          <p className="hero-lead">
+            UiX convierte cada caso de estudio en una presentación de una sola
+            página: escribes en Markdown, y aquí se vuelve un deck editorial listo
+            para presumir.
+          </p>
+          <div className="hero-cta">
+            <Link href="/projects" className="btn btn-primary">
+              Ver presentaciones →
+            </Link>
+            <Link href="/upload" className="btn btn-ghost">
+              Subir un reporte .md
+            </Link>
+          </div>
+
+          <div className="stat-row">
+            <div>
+              <div className="n grad-text">8</div>
+              <div className="l">Bloques por caso</div>
+            </div>
+            <div>
+              <div className="n grad-text">100%</div>
+              <div className="l">Markdown a deck</div>
+            </div>
+            <div>
+              <div className="n grad-text">1</div>
+              <div className="l">Página por proyecto</div>
+            </div>
+            <div>
+              <div className="n grad-text">∞</div>
+              <div className="l">Presentaciones</div>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* FEATURED DECKS */}
+      <section className="sec">
+        <div className="wrap">
+          <div className="sec-head">
+            <div>
+              <div className="eyebrow">Casos de estudio</div>
+              <h2>Presentaciones destacadas</h2>
+            </div>
+            <Link href="/projects" className="btn btn-ghost">
+              Ver todas
+            </Link>
+          </div>
+          <div className="deck-grid">
+            {decks.slice(0, 4).map((d, i) => (
+              <DeckCard deck={d} index={i} key={d.slug} />
+            ))}
+            <Link href="/upload" className="deck-card upload">
+              <div>
+                <div className="plus">+</div>
+                <h3>Sube tu reporte</h3>
+                <p>
+                  Arrastra un archivo <strong>.md</strong> con la estructura de
+                  bloques y obtén una presentación al instante.
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
