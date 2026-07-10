@@ -22,30 +22,18 @@ export default function DeckCard({ deck, index, onDelete }) {
         className="card-hit"
         aria-label={`Ver ${deck.title}`}
       />
-      <div className="deck-card-top">
-        <DeckThumbnail title={deck.title} index={index} />
-        <div className="idx">{String(index + 1).padStart(2, "0")}</div>
-        {!deck.example && mode === "admin" && (
-          <button className="card-del" onClick={handleDelete} type="button">
-            Eliminar
-          </button>
-        )}
-      </div>
+      <DeckThumbnail index={index} />
+      {!deck.example && mode === "admin" && (
+        <button className="card-del" onClick={handleDelete} type="button">
+          Eliminar
+        </button>
+      )}
       <div className="deck-card-body">
-        <div className="client">{deck.client}</div>
         <h3>{deck.title}</h3>
-        <p>{deck.subtitle}</p>
-        <div className="tag-row">
-          {deck.slides.slice(0, 4).map((s, i) => (
-            <span className="tag" key={i}>
-              {s.title}
-            </span>
-          ))}
-        </div>
+        <span className="go">
+          Ver <span className="arw">→</span>
+        </span>
       </div>
-      <span className="go">
-        Ver Business Case <span className="arw">→</span>
-      </span>
     </div>
   );
 }

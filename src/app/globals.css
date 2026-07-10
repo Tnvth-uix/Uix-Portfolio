@@ -367,23 +367,11 @@ img {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: 30px 34px 34px;
   overflow: hidden;
   transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease),
     border-color 0.4s;
-  min-height: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-.deck-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--grad);
 }
 .deck-card:hover {
   transform: translateY(-8px);
@@ -393,102 +381,74 @@ img {
 .deck-card .card-hit {
   position: absolute;
   inset: 0;
-  z-index: 1;
-}
-.deck-card-top {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 120px;
+  z-index: 3;
 }
 .deck-thumbnail {
-  position: absolute;
-  top: -30px;
-  right: -30px;
-  width: 200px;
-  height: 150px;
+  position: relative;
   z-index: 0;
-  opacity: 0.15;
-  pointer-events: none;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
 }
-.deck-card .idx {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--ink-faint);
-  letter-spacing: 0.1em;
-  pointer-events: none;
+.deck-thumbnail-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.25);
+}
+.deck-thumbnail-icon img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 .card-del {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ink-faint);
-  background: transparent;
-  border: 1px solid var(--line);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 100px;
   padding: 5px 13px;
   cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 .card-del:hover {
-  color: #e5484d;
+  color: #fff;
+  background: #e5484d;
   border-color: #e5484d;
 }
 .deck-card-body {
   position: relative;
-  z-index: 0;
+  z-index: 1;
+  padding: 22px 26px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   pointer-events: none;
-}
-.deck-card .go {
-  position: relative;
-  z-index: 0;
-  pointer-events: none;
-}
-.deck-card .client {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--teal);
 }
 .deck-card h3 {
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.02;
-  margin: 8px 0 14px;
-}
-.deck-card p {
-  color: var(--ink-soft);
-  font-size: 0.96rem;
-  max-width: 44ch;
-}
-.tag-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 22px;
-}
-.tag {
-  font-size: 0.74rem;
-  font-weight: 700;
-  padding: 6px 13px;
-  border-radius: 100px;
-  background: var(--paper-2);
-  color: var(--ink-soft);
-  border: 1px solid var(--line);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 .deck-card .go {
-  margin-top: 24px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  white-space: nowrap;
 }
 .deck-card .go .arw {
   transition: transform 0.4s var(--ease);
