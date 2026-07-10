@@ -1,6 +1,16 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { isAdmin } from "../../lib/auth";
 
 export default function Header() {
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    setAdmin(isAdmin());
+  }, []);
+
   return (
     <header className="hd">
       <div className="wrap hd-inner">
@@ -13,10 +23,12 @@ export default function Header() {
         </Link>
         <nav className="hd-nav">
           <Link href="/projects">Business Cases</Link>
-          <Link href="/upload">Subir MD</Link>
-          <Link href="/upload" className="btn btn-grad hd-cta">
-            Nuevo Business Case
-          </Link>
+          {admin && <Link href="/upload">Subir MD</Link>}
+          {admin && (
+            <Link href="/upload" className="btn btn-grad hd-cta">
+              Nuevo Business Case
+            </Link>
+          )}
         </nav>
       </div>
     </header>

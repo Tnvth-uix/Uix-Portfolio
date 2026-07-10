@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function DeckCard({ deck, index, onDelete }) {
+export default function DeckCard({ deck, index, onDelete, admin }) {
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -18,7 +18,7 @@ export default function DeckCard({ deck, index, onDelete }) {
       />
       <div className="deck-card-top">
         <div className="idx">{String(index + 1).padStart(2, "0")}</div>
-        {!deck.example && (
+        {admin && !deck.example && (
           <button className="card-del" onClick={handleDelete} type="button">
             Eliminar
           </button>

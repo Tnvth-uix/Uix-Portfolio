@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { parseMarkdown } from "../../lib/markdown";
 import { saveDeck, getUserDecks, deleteDeck } from "../../lib/store";
+import { isAdmin } from "../../lib/auth";
 
 const SAMPLE = `# Mi Proyecto
 > Cliente · Una línea que describe el caso
@@ -40,8 +41,10 @@ export default function UploadPage() {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState([]);
+  const [admin, setAdmin] = useState(null); // null = still checking
 
   useEffect(() => {
+    setAdmin(isAdmin());
     setSaved(getUserDecks());
   }, []);
 
@@ -97,6 +100,26 @@ export default function UploadPage() {
     deleteDeck(slug);
     setSaved(getUserDecks());
   };
+
+  if (admin === null) return null;
+
+  if (!admin) {
+    return (
+      <main className="up">
+        <div className="wrap">
+          <div className="eyebrow">Nuevo Business Case</div>
+          <h1>Solo administradores</h1>
+          <p className="up-lead">
+            Esta sección es exclusiva para el modo administrador. Inicia
+            sesión con la contraseña de admin para subir un Business Case.
+          </p>
+          <Link href="/projects" className="btn btn-grad" style={{ marginTop: 24 }}>
+            Ver Business Cases →
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="up">

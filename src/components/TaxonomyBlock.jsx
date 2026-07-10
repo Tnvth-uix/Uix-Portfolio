@@ -16,7 +16,7 @@ const GROUPS = [
   { key: "methods", label: "Métodos y técnicas utilizados" },
 ];
 
-export default function TaxonomyBlock({ slug, raw }) {
+export default function TaxonomyBlock({ slug, raw, admin }) {
   const [selection, setSelection] = useState(null);
   const [editing, setEditing] = useState({});
 
@@ -43,13 +43,15 @@ export default function TaxonomyBlock({ slug, raw }) {
           <div className="tax-group" key={g.key}>
             <div className="tax-group-head">
               <h4>{g.label}</h4>
-              <button
-                type="button"
-                className="tax-edit-btn"
-                onClick={() => setEditing((p) => ({ ...p, [g.key]: !p[g.key] }))}
-              >
-                {isEditing ? "Listo" : "Editar"}
-              </button>
+              {admin && (
+                <button
+                  type="button"
+                  className="tax-edit-btn"
+                  onClick={() => setEditing((p) => ({ ...p, [g.key]: !p[g.key] }))}
+                >
+                  {isEditing ? "Listo" : "Editar"}
+                </button>
+              )}
             </div>
             <div className="tax-chip-row">
               {visible.length === 0 && (

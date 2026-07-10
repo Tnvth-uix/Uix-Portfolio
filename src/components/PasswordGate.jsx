@@ -2,31 +2,30 @@
 
 import { useEffect, useState } from "react";
 import Particles from "./Particles";
-
-const PASSWORD = "SomosLosMejoresUIX";
-const KEY = "uix.authed.v1";
+import { getRole, resolveRole, setRole } from "../lib/auth";
 
 export default function PasswordGate({ children }) {
-  const [authed, setAuthed] = useState(null); // null = still checking
+  const [role, setRoleState] = useState(undefined); // undefined = still checking
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setAuthed(sessionStorage.getItem(KEY) === "1");
+    setRoleState(getRole());
   }, []);
 
   const submit = (e) => {
     e.preventDefault();
-    if (value === PASSWORD) {
-      sessionStorage.setItem(KEY, "1");
-      setAuthed(true);
+    const next = resolveRole(value);
+    if (next) {
+      setRole(next);
+      setRoleState(next);
     } else {
       setError(true);
     }
   };
 
-  if (authed === null) return null;
-  if (authed) return children;
+  if (role === undefined) return null;
+  if (role) return children;
 
   return (
     <div className="gate">

@@ -14,6 +14,7 @@ import {
   getDeckInterstitials,
 } from "../lib/store";
 import { applyPendingOverrides } from "../lib/markdown";
+import { isAdmin } from "../lib/auth";
 
 const SceneBackground = dynamic(() => import("./SceneBackground"), { ssr: false });
 
@@ -26,6 +27,7 @@ export default function Presentation({ deck }) {
   const [interstitials, setInterstitials] = useState({});
   const [inView, setInView] = useState({});
   const [show3D, setShow3D] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const slideRefs = useRef([]);
   const scrollFracRef = useRef(0);
 
@@ -39,6 +41,7 @@ export default function Presentation({ deck }) {
   useEffect(() => {
     refreshImages();
     setPendingOverrides(getPendingOverrides(deck.slug));
+    setAdmin(isAdmin());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deck.slug]);
 
@@ -100,6 +103,7 @@ export default function Presentation({ deck }) {
   };
 
   const handlePendingClick = (e) => {
+    if (!admin) return;
     const chip = e.target.closest(".pending-mark");
     if (!chip) return;
     const key = chip.getAttribute("data-pending-key");
@@ -134,11 +138,13 @@ export default function Presentation({ deck }) {
       <div className="progress" style={{ width: `${progress}%` }} />
       <div className="progress-pct">{Math.round(progress)}%</div>
 
-      <ImageManager
-        slug={deck.slug}
-        sections={deck.slides.map((s) => s.title)}
-        onChange={refreshImages}
-      />
+      {admin && (
+        <ImageManager
+          slug={deck.slug}
+          sections={deck.slides.map((s) => s.title)}
+          onChange={refreshImages}
+        />
+      )}
 
       <div className="dots">
         {Array.from({ length: total }).map((_, i) => (
@@ -232,7 +238,7 @@ export default function Presentation({ deck }) {
                     __html: applyPendingOverrides(s.html, pendingOverrides),
                   }}
                 />
-                {i === 0 && <TaxonomyBlock slug={deck.slug} raw={deck.raw || ""} />}
+                {i === 0 && <TaxonomyBlock slug={deck.slug} raw={deck.raw || ""} admin={admin} />}
                 {!bgImage && imgData?.images?.length > 0 && (
                   <div className={`img-block layout-${imgData.layout || "single"}`}>
                     {imgData.images.map((src, k) => (
@@ -278,11 +284,13 @@ export default function Presentation({ deck }) {
             <Link href="/projects" className="btn btn-primary">
               Todos los Business Cases
             </Link>
-            <Link href="/upload" className="btn btn-ghost">
-              Subir el tuyo
-            </Link>
+            {admin && (
+              <Link href="/upload" className="btn btn-ghost">
+                Subir el tuyo
+              </Link>
+            )}
           </div>
-          {!deck.example && (
+          {admin && !deck.example && (
             <button className="delete-case-link" onClick={handleDeleteDeck} type="button">
               Eliminar este Business Case
             </button>

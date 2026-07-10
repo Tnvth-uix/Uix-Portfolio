@@ -6,6 +6,7 @@ import DeckCard from "../components/DeckCard";
 import Counter from "../components/Counter";
 import Particles from "../components/Particles";
 import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
+import { isAdmin } from "../lib/auth";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
@@ -50,9 +51,11 @@ const HERO_ICONS = [
 
 export default function Home() {
   const [decks, setDecks] = useState(getExamples());
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     setDecks(getAllDecks());
+    setAdmin(isAdmin());
   }, []);
 
   const handleDelete = (slug) => {
@@ -133,18 +136,20 @@ export default function Home() {
           </div>
           <div className="deck-grid">
             {decks.slice(0, 4).map((d, i) => (
-              <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
+              <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} admin={admin} />
             ))}
-            <Link href="/upload" className="deck-card upload">
-              <div>
-                <div className="plus">+</div>
-                <h3>Nuevo Business Case</h3>
-                <p>
-                  Sube un reporte <strong>.md</strong> y conviértelo en un Business
-                  Case al instante.
-                </p>
-              </div>
-            </Link>
+            {admin && (
+              <Link href="/upload" className="deck-card upload">
+                <div>
+                  <div className="plus">+</div>
+                  <h3>Nuevo Business Case</h3>
+                  <p>
+                    Sube un reporte <strong>.md</strong> y conviértelo en un Business
+                    Case al instante.
+                  </p>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </section>

@@ -4,12 +4,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../../components/DeckCard";
 import { getExamples, getAllDecks, deleteDeck } from "../../lib/store";
+import { isAdmin } from "../../lib/auth";
 
 export default function ProjectsPage() {
   const [decks, setDecks] = useState(getExamples());
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     setDecks(getAllDecks());
+    setAdmin(isAdmin());
   }, []);
 
   const handleDelete = (slug) => {
@@ -31,17 +34,19 @@ export default function ProjectsPage() {
 
         <div className="deck-grid" style={{ marginTop: 54 }}>
           {decks.map((d, i) => (
-            <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
+            <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} admin={admin} />
           ))}
-          <Link href="/upload" className="deck-card upload">
-            <div>
-              <div className="plus">+</div>
-              <h3>Nuevo Business Case</h3>
-              <p>
-                Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
-              </p>
-            </div>
-          </Link>
+          {admin && (
+            <Link href="/upload" className="deck-card upload">
+              <div>
+                <div className="plus">+</div>
+                <h3>Nuevo Business Case</h3>
+                <p>
+                  Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
+                </p>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </main>
