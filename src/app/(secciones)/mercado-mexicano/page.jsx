@@ -1,9 +1,13 @@
-import EmbeddedApp from "../../../components/common/EmbeddedApp";
-import PdfRepository from "../../../components/common/PdfRepository";
-import { MERCADO_MEXICANO_DOCS } from "../../../data/documents";
+import ProjectsCatalog from "../../../components/ProjectsCatalog";
 
 export const metadata = {
   title: "Dominio del mercado mexicano — Business Cases By UPAX",
+};
+
+const REPORT_CARD = {
+  slug: "investigacion-mercado-mexicano",
+  title: "PrestaPrenda",
+  example: true,
 };
 
 export default function MercadoMexicanoPage() {
@@ -16,25 +20,15 @@ export default function MercadoMexicanoPage() {
           <span className="grad-text">hábitos de consumo del mercado mexicano</span>
         </h1>
         <p className="hero-lead" style={{ marginTop: 8, maxWidth: "60ch" }}>
-          Reporte de investigación de deseabilidad realizado con consumidores
-          mexicanos, con hallazgos accionables sobre percepción y comportamiento de
-          compra.
+          Business Cases entregados con consumidores mexicanos —incluida nuestra
+          investigación de deseabilidad—, evidencia directa de nuestro
+          conocimiento de la cultura y el comportamiento de compra local.
         </p>
 
-        <div style={{ marginTop: 40 }}>
-          <EmbeddedApp
-            src="/embeds/mercado-mexicano/index.html"
-            title="Reporte de investigación — Deseabilidad"
-          />
-        </div>
-
-        <div className="sec-head" style={{ marginTop: 60 }}>
-          <div>
-            <div className="eyebrow">Descargas</div>
-            <h2>Reporte completo en PDF</h2>
-          </div>
-        </div>
-        <PdfRepository docs={MERCADO_MEXICANO_DOCS} />
+        <ProjectsCatalog
+          exclude={["reclutalia", "compensalia", "zeus"]}
+          extra={[REPORT_CARD]}
+        />
       </div>
     </main>
   );

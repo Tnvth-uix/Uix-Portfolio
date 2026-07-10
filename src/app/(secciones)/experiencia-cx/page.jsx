@@ -14,11 +14,12 @@ export default function ExperienciaCxPage() {
           <span className="grad-text">tecnológico, SaaS y telecomunicaciones</span>
         </h1>
         <p className="hero-lead" style={{ marginTop: 8, maxWidth: "60ch" }}>
-          Catálogo completo de Business Cases entregados, evidencia directa de nuestra
+          Business Cases de productos SaaS y plataformas tecnológicas —
+          Reclutalia, Compensalia y ZEUS—, evidencia directa de nuestra
           experiencia en tecnología, SaaS y telecomunicaciones.
         </p>
 
-        <ProjectsCatalog />
+        <ProjectsCatalog only={["reclutalia", "compensalia", "zeus"]} />
       </div>
     </main>
   );

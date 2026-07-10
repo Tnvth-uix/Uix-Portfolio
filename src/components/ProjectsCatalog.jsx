@@ -6,7 +6,7 @@ import DeckCard from "./DeckCard";
 import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function ProjectsCatalog() {
+export default function ProjectsCatalog({ only, exclude, extra = [] }) {
   const { mode } = useAuth();
   const [decks, setDecks] = useState(getExamples());
   const [isLoading, setIsLoading] = useState(true);
@@ -25,9 +25,15 @@ export default function ProjectsCatalog() {
     setDecks((prev) => prev.filter((d) => d.slug !== slug));
   };
 
+  const filtered = decks
+    .filter((d) => (only ? only.includes(d.slug) : true))
+    .filter((d) => (exclude ? !exclude.includes(d.slug) : true));
+
+  const visible = [...extra, ...filtered];
+
   return (
     <div className="deck-grid" style={{ marginTop: 54 }}>
-      {decks.map((d, i) => (
+      {visible.map((d, i) => (
         <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
       ))}
       {mode === "admin" && (

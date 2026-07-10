@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 
+function getPdfViewerUrl(url) {
+  if (url.startsWith("/")) {
+    return url;
+  }
+
+  return `/api/pdf?url=${encodeURIComponent(url)}`;
+}
+
 export default function PdfRepository({ docs }) {
   const [active, setActive] = useState(docs[0] || null);
 
   if (!docs.length) {
     return <p className="pdf-empty">Aún no hay documentos cargados en este repositorio.</p>;
   }
-
-  const getPdfViewerUrl = (url) => {
-    // Usar Mozilla PDF.js viewer para mostrar PDFs
-    const pdfUrl = encodeURIComponent(url);
-    return `https://mozilla.github.io/pdf.js/web/viewer.html?file=${pdfUrl}`;
-  };
 
   return (
     <div className="pdf-repo">
