@@ -1,7 +1,7 @@
-import ProjectsCatalog from "../../../components/ProjectsCatalog";
+import EmbeddedApp from "../../../components/common/EmbeddedApp";
 
 export const metadata = {
-  title: "Experiencia en tecnología, SaaS y telecomunicaciones — Business Cases By UPAX",
+  title: "Experiencia previa UX research / CX — Business Cases By UPAX",
 };
 
 export default function BusinessCasesSectionPage() {
@@ -10,15 +10,20 @@ export default function BusinessCasesSectionPage() {
       <div className="wrap">
         <div className="eyebrow">Sección 8</div>
         <h1 className="display-sm" style={{ margin: "16px 0 12px", maxWidth: "30ch" }}>
-          Experiencia en el sector{" "}
-          <span className="grad-text">tecnológico, SaaS y telecomunicaciones</span>
+          Experiencia previa en proyectos de{" "}
+          <span className="grad-text">UX research y/o CX</span>
         </h1>
         <p className="hero-lead" style={{ marginTop: 8, maxWidth: "60ch" }}>
-          Catálogo completo de Business Cases entregados, evidencia directa de nuestra
-          experiencia en tecnología, SaaS y telecomunicaciones.
+          Proyecto interactivo que documenta nuestro proceso e impacto en
+          investigación de experiencia de usuario y customer experience.
         </p>
 
-        <ProjectsCatalog />
+        <div style={{ marginTop: 40 }}>
+          <EmbeddedApp
+            src="/embeds/experiencia-cx/index.html"
+            title="Experiencia previa en proyectos de UX research y/o CX"
+          />
+        </div>
       </div>
     </main>
   );
