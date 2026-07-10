@@ -282,30 +282,6 @@ export default function Presentation({ deck }) {
         return nodes;
       })}
 
-      {/* Outro */}
-      <section className="sec">
-        <div className="wrap" style={{ textAlign: "center", padding: "40px 0" }}>
-          <div className="eyebrow" style={{ justifyContent: "center" }}>
-            Fin del Proyecto
-          </div>
-          <h2 className="display-sm" style={{ margin: "18px 0 30px" }}>
-            ¿Vemos otro <span className="grad-text">Business Case</span>?
-          </h2>
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/projects" className="btn btn-primary">
-              Todos los Proyectos
-            </Link>
-            <Link href="/upload" className="btn btn-ghost">
-              Subir el tuyo
-            </Link>
-          </div>
-          {!deck.example && (
-            <button className="delete-case-link" onClick={handleDeleteDeck} type="button">
-              Eliminar este Business Case
-            </button>
-          )}
-        </div>
-      </section>
     </div>
   );
 }

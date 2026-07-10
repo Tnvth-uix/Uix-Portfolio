@@ -2716,24 +2716,24 @@ img {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--grad);
+  border: none;
   color: white;
   font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.2s var(--ease);
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
 }
 .chevron-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
 }
 .chevron-btn:disabled {
-  opacity: 0.3;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 @media (max-width: 768px) {
