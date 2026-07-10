@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { exportElementToPdf } from "../../lib/exportPdf";
+import { printIframe } from "../../lib/exportPdf";
 
 export default function EmbeddedApp({
   src,
@@ -10,29 +10,18 @@ export default function EmbeddedApp({
   pdfLabel = "Descargar PDF",
 }) {
   const iframeRef = useRef(null);
-  const [downloading, setDownloading] = useState(false);
   const [iframeReady, setIframeReady] = useState(false);
   const [error, setError] = useState("");
 
-  const handleDownload = async () => {
+  const handleDownload = () => {
     const iframe = iframeRef.current;
-    if (!iframe || downloading || !pdfFilename || !iframeReady) return;
+    if (!iframe || !pdfFilename || !iframeReady) return;
 
-    const doc = iframe.contentDocument;
-    const element = doc?.getElementById("root") || doc?.body;
-    if (!element) {
-      setError("Espera a que termine de cargar el reporte.");
-      return;
-    }
-
-    setDownloading(true);
     setError("");
     try {
-      await exportElementToPdf(element, pdfFilename);
+      printIframe(iframe, pdfFilename);
     } catch {
       setError("No se pudo generar el PDF. Intenta de nuevo.");
-    } finally {
-      setDownloading(false);
     }
   };
 
@@ -44,9 +33,9 @@ export default function EmbeddedApp({
             type="button"
             className="btn btn-ghost embed-pdf-btn"
             onClick={handleDownload}
-            disabled={downloading || !iframeReady}
+            disabled={!iframeReady}
           >
-            {downloading ? "Generando PDF…" : `${pdfLabel} ↓`}
+            {pdfLabel} ↓
           </button>
           {error && <span className="embed-pdf-error">{error}</span>}
         </div>

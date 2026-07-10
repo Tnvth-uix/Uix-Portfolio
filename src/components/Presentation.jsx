@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ImageManager from "./ImageManager";
 import TaxonomyBlock from "./TaxonomyBlock";
+import { printElement } from "../lib/exportPdf";
 import {
   getDeckImages,
   deleteDeck,
@@ -99,21 +100,10 @@ export default function Presentation({ deck }) {
     }
   };
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     const element = document.querySelector(".pres");
     if (!element) return;
-
-    const { default: html2pdf } = await import("html2pdf.js");
-
-    const opt = {
-      margin: 10,
-      filename: `${deck.title}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
-    };
-
-    html2pdf().set(opt).from(element).save();
+    printElement(element, `${deck.title}.pdf`);
   };
 
   const handlePendingClick = (e) => {

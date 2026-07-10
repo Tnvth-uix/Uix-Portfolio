@@ -3183,3 +3183,85 @@ img {
   font-weight: 600;
   color: var(--ink);
 }
+
+/* ============================================================
+   PDF export via native browser print (see src/lib/exportPdf.js)
+
+   Rather than rasterizing the DOM with html2canvas — which never fully
+   matched what's on screen — PDF downloads now use window.print()/
+   iframe.print(). These rules scope the print output to the exported
+   element only, and force scroll-reveal animations to their fully
+   visible state so nothing gets left out just because it was never
+   scrolled into view.
+   ============================================================ */
+@media print {
+  /* Classic "print only this element" trick: hide everything, then
+     re-reveal just the exported target and its descendants. Using
+     visibility (not display) keeps the target's own layout intact. */
+  html.print-scoping body * {
+    visibility: hidden;
+  }
+  html.print-scoping .print-target,
+  html.print-scoping .print-target * {
+    visibility: visible;
+  }
+  html.print-scoping .print-target {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Chrome that may live *inside* the exported target (e.g. the floating
+     nav/progress bar inside .pres) still shouldn't print. */
+  .hd,
+  .ft,
+  .sb,
+  .sb-toggle,
+  .sb-reopen,
+  .sb-scrim,
+  .gate,
+  .scene-bg,
+  .dots,
+  .chevron-nav,
+  .progress,
+  .scroll-hint,
+  .embed-report-actions,
+  .pdf-download,
+  .btn {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    height: auto !important;
+  }
+
+  .pres {
+    padding: 0 !important;
+  }
+  .slide,
+  .slide-fullscreen {
+    min-height: 0 !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    padding: 24px 0 !important;
+  }
+  /* Force every reveal-on-scroll element to its fully visible state:
+     without this, slides the visitor never scrolled past would print
+     blank because their in-view class was never toggled on. */
+  .slide-label,
+  .slide .md,
+  .slide .metric,
+  .slide .img-block img {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .embed-frame iframe {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}

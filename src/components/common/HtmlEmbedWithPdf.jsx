@@ -1,38 +1,29 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { exportElementToPdf } from "../../lib/exportPdf";
+import { printElement } from "../../lib/exportPdf";
 
 export default function HtmlEmbedWithPdf({ html, filename, label = "Descargar PDF" }) {
   const containerRef = useRef(null);
-  const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleDownload = async () => {
+  const handleDownload = () => {
     const element = containerRef.current;
-    if (!element || downloading) return;
+    if (!element) return;
 
-    setDownloading(true);
     setError("");
     try {
-      await exportElementToPdf(element, filename);
+      printElement(element, filename);
     } catch {
       setError("No se pudo generar el PDF. Intenta de nuevo.");
-    } finally {
-      setDownloading(false);
     }
   };
 
   return (
     <div className="embed-report">
       <div className="embed-report-actions">
-        <button
-          type="button"
-          className="btn btn-ghost embed-pdf-btn"
-          onClick={handleDownload}
-          disabled={downloading}
-        >
-          {downloading ? "Generando PDF…" : `${label} ↓`}
+        <button type="button" className="btn btn-ghost embed-pdf-btn" onClick={handleDownload}>
+          {label} ↓
         </button>
         {error && <span className="embed-pdf-error">{error}</span>}
       </div>
