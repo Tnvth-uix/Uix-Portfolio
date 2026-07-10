@@ -10,7 +10,7 @@ export default function Footer() {
           </div>
           <h3>
             No diseñamos pantallas, diseñamos{" "}
-            <span className="grad-text">experiencia de usuario</span>.
+            <span className="grad-text">experiencias</span>.
           </h3>
           <div className="ft-contact">
             <a href="tel:+525597074674">+52 55 9707 4674</a>
