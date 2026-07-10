@@ -190,7 +190,7 @@ export default function Presentation({ deck }) {
           aria-label="Descargar como PDF"
           title="Descargar proyecto como PDF"
         >
-          ⬇
+          PDF
         </button>
       </div>
 
