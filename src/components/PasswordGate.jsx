@@ -5,6 +5,7 @@ import Particles from "./Particles";
 import { useAuth } from "../contexts/AuthContext";
 
 const PASSWORDS = {
+  "": "viewer",
   "SomosLosMejoresUIX": "viewer",
   "Esundemo1": "admin",
 };

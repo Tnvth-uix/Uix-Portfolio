@@ -73,23 +73,18 @@ export default function Home() {
       {/* ================= COMPACT HERO ================= */}
       <section className="ihero ihero-compact">
         <Particles count={54} />
-        <div className="hero-icons" aria-hidden="true">
-          {HERO_ICONS.map((ic) => (
-            <img src={ic.src} alt="" className={`hero-icon ${ic.cls}`} key={ic.src} />
-          ))}
-        </div>
         <div className="wrap">
           <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
           <h1>
             No diseñamos pantallas, <span className="grad-text">Diseñamos experiencia de usuario</span>.
           </h1>
           <p className="lead">
-            Transformamos procesos complicados en experiencias que venden solas.
-            Explora el impacto real, caso por caso.
+            Transformacios procesos complicados en experiencias simples.
+            Explora el impactor eal caso por caso.
           </p>
           <div className="hero-cta">
             <Link href="#casos" className="btn btn-grad">
-              Ver Business Cases ↓
+              Ver Proyectos ↓
             </Link>
             <a href="mailto:contacto@uixdesign.com" className="btn btn-ghost">
               Hablemos
@@ -133,7 +128,7 @@ export default function Home() {
           <div className="sec-head">
             <div>
               <div className="eyebrow">Explora la biblioteca</div>
-              <h2>Todos los Business Cases</h2>
+              <h2>Todos los Proyectos</h2>
             </div>
             <Link href="/projects" className="btn btn-ghost">
               Ver todos →
@@ -147,7 +142,7 @@ export default function Home() {
               <Link href="/upload" className="deck-card upload">
                 <div>
                   <div className="plus">+</div>
-                  <h3>Nuevo Business Case</h3>
+                  <h3>Nuevo Proyecto</h3>
                   <p>
                     Sube un reporte <strong>.md</strong> y conviértelo en un Business
                     Case al instante.

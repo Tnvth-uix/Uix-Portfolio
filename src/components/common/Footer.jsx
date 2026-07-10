@@ -23,8 +23,7 @@ export default function Footer() {
         </div>
         <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <Link href="/projects">Business Cases</Link>
-            <Link href="/upload">Nuevo Business Case</Link>
+            <Link href="/projects">Proyectos</Link>
             <a href="mailto:contacto@uixdesign.com">Contacto</a>
             <a
               href="https://github.com/Tnvth-uix/Uix-Portfolio"
@@ -37,7 +36,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="wrap ft-meta" style={{ marginTop: 40 }}>
-        © {new Date().getFullYear()} Business Cases · By UPAX · Todos los
+        © {new Date().getFullYear()} Portafolio · By UIX · Todos los
         derechos reservados · Política de privacidad
       </div>
     </footer>

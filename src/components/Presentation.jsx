@@ -151,6 +151,25 @@ export default function Presentation({ deck }) {
         ))}
       </div>
 
+      <div className="chevron-nav">
+        <button
+          className="chevron-btn chevron-up"
+          onClick={() => active > 0 && goTo(active - 1)}
+          disabled={active === 0}
+          aria-label="Slide anterior"
+        >
+          ↑
+        </button>
+        <button
+          className="chevron-btn chevron-down"
+          onClick={() => active < total - 1 && goTo(active + 1)}
+          disabled={active === total - 1}
+          aria-label="Siguiente slide"
+        >
+          ↓
+        </button>
+      </div>
+
       {/* Cover */}
       <section
         className="slide slide-cover"
@@ -158,8 +177,6 @@ export default function Presentation({ deck }) {
       >
         <div className="tech-grid" />
         <div className="wrap">
-          <div className="cover-act">Acto I — Apertura</div>
-          <div className="client-line">{deck.client}</div>
           <h1 className="typing-caret">{deck.title}</h1>
           <p className="sub">{deck.subtitle}</p>
         </div>
@@ -269,14 +286,14 @@ export default function Presentation({ deck }) {
       <section className="sec">
         <div className="wrap" style={{ textAlign: "center", padding: "40px 0" }}>
           <div className="eyebrow" style={{ justifyContent: "center" }}>
-            Fin del Business Case
+            Fin del Proyecto
           </div>
           <h2 className="display-sm" style={{ margin: "18px 0 30px" }}>
             ¿Vemos otro <span className="grad-text">Business Case</span>?
           </h2>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/projects" className="btn btn-primary">
-              Todos los Business Cases
+              Todos los Proyectos
             </Link>
             <Link href="/upload" className="btn btn-ghost">
               Subir el tuyo
