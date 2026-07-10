@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import html2pdf from "html2pdf.js";
 import ImageManager from "./ImageManager";
 import TaxonomyBlock from "./TaxonomyBlock";
 import {
@@ -99,6 +100,21 @@ export default function Presentation({ deck }) {
     }
   };
 
+  const handleDownloadPDF = () => {
+    const element = document.querySelector(".pres");
+    if (!element) return;
+
+    const opt = {
+      margin: 10,
+      filename: `${deck.title}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   const handlePendingClick = (e) => {
     const chip = e.target.closest(".pending-mark");
     if (!chip) return;
@@ -167,6 +183,14 @@ export default function Presentation({ deck }) {
           aria-label="Siguiente slide"
         >
           ↓
+        </button>
+        <button
+          className="chevron-btn"
+          onClick={handleDownloadPDF}
+          aria-label="Descargar como PDF"
+          title="Descargar proyecto como PDF"
+        >
+          ⬇
         </button>
       </div>
 
