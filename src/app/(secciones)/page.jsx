@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import DeckCard from "../components/DeckCard";
-import Counter from "../components/Counter";
-import Particles from "../components/Particles";
-import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
-import { useAuth } from "../contexts/AuthContext";
+import DeckCard from "../../components/DeckCard";
+import Counter from "../../components/Counter";
+import Particles from "../../components/Particles";
+import { getExamples, getAllDecks, deleteDeck } from "../../lib/store";
+import { useAuth } from "../../contexts/AuthContext";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
