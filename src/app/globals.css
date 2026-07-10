@@ -986,70 +986,72 @@ img {
   letter-spacing: 0.03em;
 }
 
-/* ---- Case study rows (business impact) ---- */
+/* ---- Case study cards (business impact) — compact 3-up grid ---- */
 .cases {
   display: grid;
-  gap: 20px;
-  margin-top: 46px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 40px;
+}
+@media (max-width: 900px) {
+  .cases {
+    grid-template-columns: 1fr;
+  }
 }
 .case {
-  display: grid;
-  grid-template-columns: 0.7fr 1.3fr auto;
-  align-items: center;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 42px 46px;
-  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease),
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
     border-color 0.4s;
 }
 .case:hover {
   transform: translateY(-6px);
-  box-shadow: 0 40px 80px -55px rgba(20, 19, 26, 0.55);
+  box-shadow: 0 30px 60px -42px rgba(23, 18, 50, 0.4);
   border-color: var(--line-strong);
 }
 .case .metric-big {
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(2.1rem, 3.6vw, 2.9rem);
   font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 .case .copy {
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--ink);
-  letter-spacing: -0.02em;
-  line-height: 1.3;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
 }
 .case .copy .client {
   display: block;
   margin-top: 10px;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
 .case .go {
+  margin-top: auto;
+  padding-top: 4px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-weight: 700;
+  font-size: 0.86rem;
 }
 .case .go .arw {
   transition: transform 0.4s var(--ease);
 }
 .case:hover .go .arw {
   transform: translateX(6px);
-}
-@media (max-width: 860px) {
-  .case {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 32px;
-  }
 }
 
 /* ---- Stats band (dark) ---- */

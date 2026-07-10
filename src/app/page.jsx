@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../components/DeckCard";
-import { getExamples, getUserDecks } from "../lib/store";
+import Counter from "../components/Counter";
+import { getExamples, getAllDecks } from "../lib/store";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
@@ -41,7 +42,7 @@ export default function Home() {
   const [decks, setDecks] = useState(getExamples());
 
   useEffect(() => {
-    setDecks([...getExamples(), ...getUserDecks()]);
+    setDecks(getAllDecks());
   }, []);
 
   return (
@@ -91,7 +92,9 @@ export default function Home() {
           <div className="cases">
             {CASES.map((c) => (
               <Link href={c.href} className="case" key={c.metric}>
-                <div className="metric-big grad-text">{c.metric}</div>
+                <div className="metric-big grad-text">
+                  <Counter value={c.metric} />
+                </div>
                 <div className="copy">
                   {c.copy}
                   <span className="client">{c.client}</span>
@@ -149,7 +152,9 @@ export default function Home() {
             <div className="stats-grid stats-grid-4">
               {STATS.map((s) => (
                 <div className="stat-cell" key={s.big}>
-                  <div className="big grad-text">{s.big}</div>
+                  <div className="big grad-text">
+                    <Counter value={s.big} />
+                  </div>
                   <div className="desc">{s.desc}</div>
                 </div>
               ))}

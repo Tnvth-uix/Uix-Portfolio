@@ -19,8 +19,12 @@ export function getUserDecks() {
   }
 }
 
+/* Merges examples + user decks, de-duplicated by slug (user decks win). */
 export function getAllDecks() {
-  return [...getExamples(), ...getUserDecks()];
+  const bySlug = new Map();
+  for (const d of getExamples()) bySlug.set(d.slug, d);
+  for (const d of getUserDecks()) bySlug.set(d.slug, d);
+  return [...bySlug.values()];
 }
 
 export function getDeckBySlug(slug) {

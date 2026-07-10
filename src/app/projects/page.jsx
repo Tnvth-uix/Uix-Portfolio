@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../../components/DeckCard";
-import { getExamples, getUserDecks } from "../../lib/store";
+import { getExamples, getAllDecks } from "../../lib/store";
 
 export default function ProjectsPage() {
   const [decks, setDecks] = useState(getExamples());
 
   useEffect(() => {
-    setDecks([...getExamples(), ...getUserDecks()]);
+    setDecks(getAllDecks());
   }, []);
 
   return (
