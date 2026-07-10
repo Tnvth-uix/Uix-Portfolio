@@ -55,10 +55,10 @@ const POLICIES = [
 ];
 
 const ADVISOR = {
-  name: "Ana Carolina Quintal Zogbi",
+  name: "Marco Antonio Gonzalez Morales",
   role: "Customer Success",
   channel: "Correo electrónico",
-  email: "ana.quintal@jansan.mx",
+  email: "marco.gonzalezm@jansan.mx",
   sla: "Plazo máximo de respuesta de 1 día hábil",
 };
 
