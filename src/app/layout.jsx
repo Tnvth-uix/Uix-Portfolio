@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import PasswordGate from "../components/PasswordGate";
+import { AuthProvider } from "../contexts/AuthContext";
 
 export const metadata = {
   title: "Business Cases — By UPAX",
@@ -19,11 +20,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <PasswordGate>
-          <Header />
-          {children}
-          <Footer />
-        </PasswordGate>
+        <AuthProvider>
+          <PasswordGate>
+            <Header />
+            {children}
+            <Footer />
+          </PasswordGate>
+        </AuthProvider>
       </body>
     </html>
   );

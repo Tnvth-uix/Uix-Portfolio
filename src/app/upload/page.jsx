@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { parseMarkdown } from "../../lib/markdown";
 import { saveDeck, getUserDecks, deleteDeck } from "../../lib/store";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SAMPLE = `# Mi Proyecto
 > Cliente · Una línea que describe el caso
@@ -35,6 +36,7 @@ Impacto en negocio: [FALTA: cifra de conversión]
 
 export default function UploadPage() {
   const router = useRouter();
+  const { mode } = useAuth();
   const inputRef = useRef(null);
   const [drag, setDrag] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -42,8 +44,16 @@ export default function UploadPage() {
   const [saved, setSaved] = useState([]);
 
   useEffect(() => {
-    setSaved(getUserDecks());
-  }, []);
+    if (mode !== "admin") {
+      router.push("/");
+      return;
+    }
+    async function loadDecks() {
+      const decks = await getUserDecks();
+      setSaved(decks);
+    }
+    loadDecks();
+  }, [mode, router]);
 
   const handleRaw = (raw) => {
     setError("");
@@ -80,12 +90,12 @@ export default function UploadPage() {
 
   const [saving, setSaving] = useState(false);
 
-  const confirmSave = () => {
+  const confirmSave = async () => {
     if (!preview || saving) return;
     setSaving(true);
     setError("");
     try {
-      const parsed = saveDeck(preview.raw);
+      const parsed = await saveDeck(preview.raw);
       router.push(`/projects/${parsed.slug}`);
     } catch (err) {
       setSaving(false);
@@ -93,9 +103,10 @@ export default function UploadPage() {
     }
   };
 
-  const removeSaved = (slug) => {
-    deleteDeck(slug);
-    setSaved(getUserDecks());
+  const removeSaved = async (slug) => {
+    await deleteDeck(slug);
+    const decks = await getUserDecks();
+    setSaved(decks);
   };
 
   return (

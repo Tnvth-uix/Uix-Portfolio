@@ -9,7 +9,11 @@ export default function ProjectPage({ params }) {
   const [deck, setDeck] = useState(undefined); // undefined = loading
 
   useEffect(() => {
-    setDeck(getDeckBySlug(params.slug));
+    async function loadDeck() {
+      const loaded = await getDeckBySlug(params.slug);
+      setDeck(loaded);
+    }
+    loadDeck();
   }, [params.slug]);
 
   if (deck === undefined) {

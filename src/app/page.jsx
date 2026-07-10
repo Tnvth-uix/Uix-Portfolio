@@ -6,6 +6,7 @@ import DeckCard from "../components/DeckCard";
 import Counter from "../components/Counter";
 import Particles from "../components/Particles";
 import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
+import { useAuth } from "../contexts/AuthContext";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
@@ -49,14 +50,21 @@ const HERO_ICONS = [
 ];
 
 export default function Home() {
+  const { mode } = useAuth();
   const [decks, setDecks] = useState(getExamples());
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setDecks(getAllDecks());
+    async function loadDecks() {
+      const allDecks = await getAllDecks();
+      setDecks(allDecks);
+      setIsLoading(false);
+    }
+    loadDecks();
   }, []);
 
-  const handleDelete = (slug) => {
-    deleteDeck(slug);
+  const handleDelete = async (slug) => {
+    await deleteDeck(slug);
     setDecks((prev) => prev.filter((d) => d.slug !== slug));
   };
 
@@ -135,16 +143,18 @@ export default function Home() {
             {decks.slice(0, 4).map((d, i) => (
               <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
             ))}
-            <Link href="/upload" className="deck-card upload">
-              <div>
-                <div className="plus">+</div>
-                <h3>Nuevo Business Case</h3>
-                <p>
-                  Sube un reporte <strong>.md</strong> y conviértelo en un Business
-                  Case al instante.
-                </p>
-              </div>
-            </Link>
+            {mode === "admin" && (
+              <Link href="/upload" className="deck-card upload">
+                <div>
+                  <div className="plus">+</div>
+                  <h3>Nuevo Business Case</h3>
+                  <p>
+                    Sube un reporte <strong>.md</strong> y conviértelo en un Business
+                    Case al instante.
+                  </p>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </section>

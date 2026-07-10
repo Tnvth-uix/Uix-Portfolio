@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function DeckCard({ deck, index, onDelete }) {
+  const { mode } = useAuth();
+
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -18,7 +23,7 @@ export default function DeckCard({ deck, index, onDelete }) {
       />
       <div className="deck-card-top">
         <div className="idx">{String(index + 1).padStart(2, "0")}</div>
-        {!deck.example && (
+        {!deck.example && mode === "admin" && (
           <button className="card-del" onClick={handleDelete} type="button">
             Eliminar
           </button>

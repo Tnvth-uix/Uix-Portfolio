@@ -10,6 +10,7 @@ import {
   setInterstitial,
   removeInterstitial,
 } from "../lib/store";
+import { useAuth } from "../contexts/AuthContext";
 
 const LAYOUTS = [
   { id: "single", label: "Una imagen grande" },
@@ -19,6 +20,7 @@ const LAYOUTS = [
 ];
 
 export default function ImageManager({ slug, sections, onChange }) {
+  const { mode: authMode } = useAuth();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState("section"); // "section" | "gap"
   const [sectionIndex, setSectionIndex] = useState(0);
@@ -77,6 +79,10 @@ export default function ImageManager({ slug, sections, onChange }) {
     })),
     { value: sections.length - 1, label: "Después de la última sección" },
   ];
+
+  if (authMode !== "admin") {
+    return null; // Hide image manager in viewer mode
+  }
 
   return (
     <>
