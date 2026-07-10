@@ -2,13 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import ImageManager from "./ImageManager";
+import { getDeckImages, deleteDeck } from "../lib/store";
 
 export default function Presentation({ deck }) {
+  const router = useRouter();
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [imagesData, setImagesData] = useState({});
   const slideRefs = useRef([]);
 
   const total = deck.slides.length + 1; // + cover
+
+  const refreshImages = () => setImagesData(getDeckImages(deck.slug));
+
+  useEffect(() => {
+    refreshImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deck.slug]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -30,11 +42,24 @@ export default function Presentation({ deck }) {
     slideRefs.current[i]?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleDeleteDeck = () => {
+    if (confirm(`¿Eliminar "${deck.title}"? Esta acción no se puede deshacer.`)) {
+      deleteDeck(deck.slug);
+      router.push("/projects");
+    }
+  };
+
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
     <div className="pres">
       <div className="progress" style={{ width: `${progress}%` }} />
+
+      <ImageManager
+        slug={deck.slug}
+        sections={deck.slides.map((s) => s.title)}
+        onChange={refreshImages}
+      />
 
       <div className="dots">
         {Array.from({ length: total }).map((_, i) => (
@@ -88,6 +113,13 @@ export default function Presentation({ deck }) {
                 </div>
               )}
               <div className="md" dangerouslySetInnerHTML={{ __html: s.html }} />
+              {imagesData[i]?.images?.length > 0 && (
+                <div className={`img-block layout-${imagesData[i].layout || "single"}`}>
+                  {imagesData[i].images.map((src, k) => (
+                    <img src={src} alt="" key={k} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="slide-num">
@@ -113,6 +145,11 @@ export default function Presentation({ deck }) {
               Subir el tuyo
             </Link>
           </div>
+          {!deck.example && (
+            <button className="delete-case-link" onClick={handleDeleteDeck} type="button">
+              Eliminar este Business Case
+            </button>
+          )}
         </div>
       </section>
     </div>

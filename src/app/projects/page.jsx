@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../../components/DeckCard";
-import { getExamples, getAllDecks } from "../../lib/store";
+import { getExamples, getAllDecks, deleteDeck } from "../../lib/store";
 
 export default function ProjectsPage() {
   const [decks, setDecks] = useState(getExamples());
@@ -11,6 +11,11 @@ export default function ProjectsPage() {
   useEffect(() => {
     setDecks(getAllDecks());
   }, []);
+
+  const handleDelete = (slug) => {
+    deleteDeck(slug);
+    setDecks((prev) => prev.filter((d) => d.slug !== slug));
+  };
 
   return (
     <main className="sec" style={{ paddingTop: 60 }}>
@@ -26,7 +31,7 @@ export default function ProjectsPage() {
 
         <div className="deck-grid" style={{ marginTop: 54 }}>
           {decks.map((d, i) => (
-            <DeckCard deck={d} index={i} key={d.slug} />
+            <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
           ))}
           <Link href="/upload" className="deck-card upload">
             <div>

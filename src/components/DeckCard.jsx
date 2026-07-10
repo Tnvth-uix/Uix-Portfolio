@@ -1,11 +1,30 @@
 import Link from "next/link";
 
-export default function DeckCard({ deck, index }) {
+export default function DeckCard({ deck, index, onDelete }) {
+  const handleDelete = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (confirm(`¿Eliminar "${deck.title}"? Esta acción no se puede deshacer.`)) {
+      onDelete?.(deck.slug);
+    }
+  };
+
   return (
-    <Link href={`/projects/${deck.slug}`} className="deck-card">
-      <div className="cover" />
-      <div className="idx">{String(index + 1).padStart(2, "0")}</div>
-      <div>
+    <div className="deck-card">
+      <Link
+        href={`/projects/${deck.slug}`}
+        className="card-hit"
+        aria-label={`Ver ${deck.title}`}
+      />
+      <div className="deck-card-top">
+        <div className="idx">{String(index + 1).padStart(2, "0")}</div>
+        {!deck.example && (
+          <button className="card-del" onClick={handleDelete} type="button">
+            Eliminar
+          </button>
+        )}
+      </div>
+      <div className="deck-card-body">
         <div className="client">{deck.client}</div>
         <h3>{deck.title}</h3>
         <p>{deck.subtitle}</p>
@@ -20,6 +39,6 @@ export default function DeckCard({ deck, index }) {
       <span className="go">
         Ver Business Case <span className="arw">→</span>
       </span>
-    </Link>
+    </div>
   );
 }

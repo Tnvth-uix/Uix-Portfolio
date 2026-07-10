@@ -24,7 +24,7 @@ export default function Footer() {
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <Link href="/projects">Business Cases</Link>
             <Link href="/upload">Nuevo Business Case</Link>
-            <Link href="/#contacto">Contacto</Link>
+            <a href="mailto:contacto@uixdesign.com">Contacto</a>
             <a
               href="https://github.com/Tnvth-uix/Uix-Portfolio"
               target="_blank"

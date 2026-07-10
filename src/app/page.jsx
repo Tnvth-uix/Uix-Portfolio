@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../components/DeckCard";
 import Counter from "../components/Counter";
-import { getExamples, getAllDecks } from "../lib/store";
+import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
@@ -45,6 +45,11 @@ export default function Home() {
     setDecks(getAllDecks());
   }, []);
 
+  const handleDelete = (slug) => {
+    deleteDeck(slug);
+    setDecks((prev) => prev.filter((d) => d.slug !== slug));
+  };
+
   return (
     <main>
       {/* ================= COMPACT HERO ================= */}
@@ -62,21 +67,14 @@ export default function Home() {
             <Link href="#casos" className="btn btn-grad">
               Ver Business Cases ↓
             </Link>
-            <Link href="#contacto" className="btn btn-ghost">
+            <a href="mailto:contacto@uixdesign.com" className="btn btn-ghost">
               Hablemos
-            </Link>
+            </a>
           </div>
 
-          <div className="cert">
-            <span className="lbl">Certificados por</span>
-            <div className="logos">
-              {CERTS.map((c) => (
-                <div className="logo" key={c}>
-                  {c}
-                </div>
-              ))}
-            </div>
-          </div>
+          <p className="cert-discreet">
+            Certificados por {CERTS.join(" · ")}
+          </p>
         </div>
       </section>
 
@@ -99,9 +97,6 @@ export default function Home() {
                   {c.copy}
                   <span className="client">{c.client}</span>
                 </div>
-                <span className="go">
-                  Ver Business Case <span className="arw">→</span>
-                </span>
               </Link>
             ))}
           </div>
@@ -122,7 +117,7 @@ export default function Home() {
           </div>
           <div className="deck-grid">
             {decks.slice(0, 4).map((d, i) => (
-              <DeckCard deck={d} index={i} key={d.slug} />
+              <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
             ))}
             <Link href="/upload" className="deck-card upload">
               <div>
@@ -159,18 +154,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= CTA ================= */}
-      <section className="sec" id="contacto" style={{ paddingTop: 90 }}>
-        <div className="wrap">
-          <div className="cta-band">
-            <h2>Agenda un diagnóstico y mejora tus conversiones.</h2>
-            <a href="mailto:contacto@uixdesign.com" className="btn">
-              Agendar ahora →
-            </a>
           </div>
         </div>
       </section>

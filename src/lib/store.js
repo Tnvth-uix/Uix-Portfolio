@@ -2,6 +2,7 @@ import { parseMarkdown } from "./markdown";
 import { EXAMPLES } from "../data/examples";
 
 const KEY = "uix.presentations.v1";
+const IMG_KEY = "uix.images.v1";
 
 /* Example decks are always available and marked read-only. */
 export function getExamples() {
@@ -44,4 +45,71 @@ export function deleteDeck(slug) {
   const arr = JSON.parse(localStorage.getItem(KEY) || "[]");
   const filtered = arr.filter((d) => parseMarkdown(d.raw).slug !== slug);
   localStorage.setItem(KEY, JSON.stringify(filtered));
+  deleteDeckImages(slug);
+}
+
+/* ============================================================
+   Section images — attached per business case + section index.
+   Stored separately from deck content so they apply to both
+   user-uploaded decks and seeded examples.
+   Shape: { [slug]: { [sectionIndex]: { layout, images: [dataUrl] } } }
+   ============================================================ */
+
+function readImageStore() {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(IMG_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function writeImageStore(data) {
+  localStorage.setItem(IMG_KEY, JSON.stringify(data));
+}
+
+export function getDeckImages(slug) {
+  return readImageStore()[slug] || {};
+}
+
+export function getSectionImages(slug, sectionIndex) {
+  const deck = getDeckImages(slug);
+  return deck[sectionIndex] || { layout: "single", images: [] };
+}
+
+export function addSectionImages(slug, sectionIndex, dataUrls) {
+  const store = readImageStore();
+  const deck = store[slug] || {};
+  const sec = deck[sectionIndex] || { layout: "single", images: [] };
+  sec.images = [...sec.images, ...dataUrls];
+  deck[sectionIndex] = sec;
+  store[slug] = deck;
+  writeImageStore(store);
+}
+
+export function setSectionLayout(slug, sectionIndex, layout) {
+  const store = readImageStore();
+  const deck = store[slug] || {};
+  const sec = deck[sectionIndex] || { layout: "single", images: [] };
+  sec.layout = layout;
+  deck[sectionIndex] = sec;
+  store[slug] = deck;
+  writeImageStore(store);
+}
+
+export function removeSectionImage(slug, sectionIndex, imgIndex) {
+  const store = readImageStore();
+  const deck = store[slug] || {};
+  const sec = deck[sectionIndex];
+  if (!sec) return;
+  sec.images = sec.images.filter((_, i) => i !== imgIndex);
+  deck[sectionIndex] = sec;
+  store[slug] = deck;
+  writeImageStore(store);
+}
+
+export function deleteDeckImages(slug) {
+  const store = readImageStore();
+  delete store[slug];
+  writeImageStore(store);
 }
