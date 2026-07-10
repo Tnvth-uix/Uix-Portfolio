@@ -2226,9 +2226,10 @@ img {
   transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
 }
 .tax-chip.active {
-  background: var(--grad);
+  background: linear-gradient(135deg, #ace738 0%, #00c4b3 100%);
   border-color: transparent;
   color: #171232;
+  font-weight: 800;
 }
 .tax-chip.editable {
   cursor: pointer;
