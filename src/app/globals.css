@@ -4,27 +4,28 @@
    ============================================================ */
 
 :root {
-  /* Design System accents */
-  --purple: #4a148c;
-  --purple-2: #311b92;
-  --blue: #3949ab;
-  --blue-2: #283593;
-  --green: #00e676;
-  --teal: #00bfa5;
-  --sky: #00b0ff;
+  /* Brand palette — UiX estilo visual */
+  --purple: #8c59fe; /* Violeta */
+  --purple-2: #371281; /* Morado oscuro */
+  --blue: #597aff; /* Azul */
+  --blue-2: #371281;
+  --green: #ace738; /* Verde claro */
+  --teal: #00c4b3; /* Turquesa */
+  --sky: #597aff; /* Azul (acento) */
+  --metal: #303c48; /* Metal */
 
-  /* Light-mode surface palette */
-  --paper: #f6f5f1;
-  --paper-2: #efeee8;
+  /* Light-mode surface palette (neutros de marca) */
+  --paper: #f4f6fb;
+  --paper-2: #ebeef4;
   --card: #ffffff;
-  --ink: #14131a;
-  --ink-soft: #55535f;
-  --ink-faint: #8b8996;
-  --line: #e4e2da;
-  --line-strong: #d3d0c6;
+  --ink: #171232; /* deep brand violet-charcoal */
+  --ink-soft: #5c6671;
+  --ink-faint: #81878e;
+  --line: #e4e8f2;
+  --line-strong: #c3c5c9;
 
-  /* Signature gradient */
-  --grad: linear-gradient(115deg, var(--green), var(--teal) 45%, var(--sky));
+  /* Signature gradient — violeta → azul → turquesa → verde */
+  --grad: linear-gradient(115deg, #8c59fe, #597aff 38%, #00c4b3 72%, #ace738);
   --grad-purple: linear-gradient(120deg, var(--purple), var(--blue));
 
   --radius: 22px;
@@ -156,7 +157,7 @@ img {
 }
 .btn-grad {
   background: var(--grad);
-  color: #062b22;
+  color: #171232;
 }
 .btn-grad:hover {
   transform: translateY(-3px);
@@ -169,7 +170,7 @@ img {
   top: 0;
   z-index: 100;
   backdrop-filter: saturate(180%) blur(14px);
-  background: rgba(246, 245, 241, 0.72);
+  background: rgba(244, 246, 251, 0.75);
   border-bottom: 1px solid var(--line);
 }
 .hd-inner {
@@ -452,7 +453,7 @@ img {
   background: var(--grad);
   display: grid;
   place-items: center;
-  color: #062b22;
+  color: #171232;
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 20px;
@@ -769,7 +770,7 @@ img {
   display: grid;
   place-items: center;
   margin: 0 auto 22px;
-  color: #062b22;
+  color: #171232;
   font-size: 2rem;
   font-weight: 700;
 }
@@ -1153,7 +1154,7 @@ img {
   justify-content: space-between;
   gap: 30px;
   flex-wrap: wrap;
-  color: #062b22;
+  color: #171232;
 }
 .cta-band h2 {
   font-size: clamp(1.9rem, 4.4vw, 3.4rem);
@@ -1163,7 +1164,7 @@ img {
   max-width: 18ch;
 }
 .cta-band .btn {
-  background: #062b22;
+  background: #171232;
   color: var(--green);
 }
 .cta-band .btn:hover {
@@ -1227,4 +1228,52 @@ img {
 .ft-contact a {
   color: var(--ink);
   font-weight: 700;
+}
+
+/* ---- Compact hero (Business Case focus) ---- */
+.ihero-compact {
+  min-height: auto;
+  padding: clamp(70px, 12vh, 120px) 0 clamp(56px, 8vh, 90px);
+}
+.ihero-compact h1 {
+  font-size: clamp(2.6rem, 6.4vw, 5.4rem);
+  max-width: 20ch;
+}
+.ihero-compact .cert {
+  margin-top: 48px;
+  padding-top: 26px;
+}
+
+/* ---- Slim company proof band ---- */
+.stats-band-slim {
+  padding: 72px 0;
+  margin-top: 0;
+}
+.stats-slim {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr;
+  gap: 50px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .stats-slim {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+.stats-slim-intro p {
+  margin-top: 14px;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+.stats-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 600px) {
+  .stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 24px;
+  }
 }

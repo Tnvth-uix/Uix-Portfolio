@@ -11,10 +11,10 @@ export default function Header() {
           </span>
         </Link>
         <nav className="hd-nav">
-          <Link href="/projects">Presentaciones</Link>
+          <Link href="/projects">Business Cases</Link>
           <Link href="/upload">Subir MD</Link>
           <Link href="/upload" className="btn btn-grad hd-cta">
-            Nueva presentación
+            Nuevo Business Case
           </Link>
         </nav>
       </div>

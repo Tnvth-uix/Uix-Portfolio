@@ -90,14 +90,14 @@ export default function UploadPage() {
   return (
     <main className="up">
       <div className="wrap">
-        <div className="eyebrow">Nueva presentación</div>
+        <div className="eyebrow">Nuevo Business Case</div>
         <h1>
           De <span className="grad-text">Markdown</span>
-          <br />a presentación.
+          <br />a Business Case.
         </h1>
         <p className="up-lead">
-          Sube un reporte con la estructura de bloques y lo convertimos en un deck
-          editorial de una sola página. Se guarda en este navegador.
+          Sube un reporte con la estructura de bloques y lo convertimos en un
+          Business Case editorial de una sola página. Se guarda en este navegador.
         </p>
 
         {/* Dropzone */}

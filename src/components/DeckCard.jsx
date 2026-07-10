@@ -18,7 +18,7 @@ export default function DeckCard({ deck, index }) {
         </div>
       </div>
       <span className="go">
-        Ver presentación <span className="arw">→</span>
+        Ver Business Case <span className="arw">→</span>
       </span>
     </Link>
   );

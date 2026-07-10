@@ -100,17 +100,17 @@ export default function Presentation({ deck }) {
       <section className="sec">
         <div className="wrap" style={{ textAlign: "center", padding: "40px 0" }}>
           <div className="eyebrow" style={{ justifyContent: "center" }}>
-            Fin del caso
+            Fin del Business Case
           </div>
           <h2 className="display-sm" style={{ margin: "18px 0 30px" }}>
-            ¿Vemos otra <span className="grad-text">presentación</span>?
+            ¿Vemos otro <span className="grad-text">Business Case</span>?
           </h2>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/projects" className="btn btn-primary">
-              Todas las presentaciones
+              Todos los Business Cases
             </Link>
             <Link href="/upload" className="btn btn-ghost">
-              Subir la tuya
+              Subir el tuyo
             </Link>
           </div>
         </div>

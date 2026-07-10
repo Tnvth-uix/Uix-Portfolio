@@ -22,10 +22,9 @@ export default function Footer() {
         </div>
         <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <Link href="/#nosotros">Nosotros</Link>
-            <Link href="/#contacto">Servicios</Link>
-            <Link href="/projects">Presentaciones</Link>
-            <Link href="/upload">Subir Markdown</Link>
+            <Link href="/projects">Business Cases</Link>
+            <Link href="/upload">Nuevo Business Case</Link>
+            <Link href="/#contacto">Contacto</Link>
             <a
               href="https://github.com/Tnvth-uix/Uix-Portfolio"
               target="_blank"
