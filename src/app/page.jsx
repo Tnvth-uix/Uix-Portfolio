@@ -81,7 +81,7 @@ export default function Home() {
         <div className="wrap">
           <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
           <h1>
-            Resultados de negocio, <span className="grad-text">contados como Business Cases</span>.
+            No diseñamos pantallas, <span className="grad-text">Diseñamos experiencia de usuario</span>.
           </h1>
           <p className="lead">
             Transformamos procesos complicados en experiencias que venden solas.
