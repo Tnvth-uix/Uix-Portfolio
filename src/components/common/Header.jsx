@@ -16,7 +16,6 @@ export default function Header() {
           </span>
         </Link>
         <nav className="hd-nav">
-          <Link href="/projects">Proyectos</Link>
           {mode === "admin" && (
             <>
               <Link href="/upload">Subir MD</Link>
