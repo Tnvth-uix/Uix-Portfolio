@@ -13,10 +13,18 @@ export function slugify(str) {
     .slice(0, 60);
 }
 
-/* Strips a leading "Bloque N — " / "Bloque N:" / "Bloque N -" prefix. */
+/*
+  Cleans up section titles: strips a leading "Bloque N — " prefix and a
+  leading plain "N. " numbering, then normalizes any "Portada / Índice"
+  variant down to a plain "Índice".
+*/
 function stripBlockPrefix(title) {
-  const stripped = title.replace(/^\s*bloque\s*\d+\s*[:\-—–]*\s*/i, "").trim();
-  return stripped || title;
+  let clean = title
+    .replace(/^\s*bloque\s*\d+\s*[:\-—–]*\s*/i, "")
+    .replace(/^\s*\d+\s*[.)]\s*/, "")
+    .trim();
+  if (/^portada\s*\/\s*índice$/i.test(clean)) clean = "Índice";
+  return clean || title;
 }
 
 function escapeHtml(str) {
@@ -95,7 +103,8 @@ export function parseMarkdown(raw) {
     .map((s, sIndex) => {
       const body = s.lines.join("\n").trim();
       if (!body && !s.title) return null;
-      const withMarkers = markPending(body, sIndex, () => pendingCounter++);
+      const withMeta = markMetaRow(body);
+      const withMarkers = markPending(withMeta, sIndex, () => pendingCounter++);
       return {
         title: s.title,
         html: marked.parse(withMarkers),
@@ -111,6 +120,27 @@ export function parseMarkdown(raw) {
     slug: slugify(title),
     slides,
   };
+}
+
+/*
+  Turns an adjacent "**Cliente** X" / "**Proyecto** Y" pair (as commonly
+  found at the top of "Datos Generales") into a two-chip visual block
+  instead of a plain paragraph.
+*/
+function markMetaRow(body) {
+  return body.replace(
+    /\*\*Cliente\*\*\s*([^\n]+)\n\*\*Proyecto\*\*\s*([^\n]+)/i,
+    (_m, cliente, proyecto) => `<div class="meta-row">
+  <div class="meta-chip">
+    <span class="meta-k">Cliente</span>
+    <span class="meta-v">${escapeHtml(cliente.trim())}</span>
+  </div>
+  <div class="meta-chip meta-chip-accent">
+    <span class="meta-k">Proyecto</span>
+    <span class="meta-v">${escapeHtml(proyecto.trim())}</span>
+  </div>
+</div>`
+  );
 }
 
 /*

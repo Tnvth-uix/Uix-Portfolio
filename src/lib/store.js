@@ -36,10 +36,42 @@ export function getDeckBySlug(slug) {
 
 export function saveDeck(raw) {
   const parsed = parseMarkdown(raw);
-  const arr = JSON.parse(localStorage.getItem(KEY) || "[]");
-  const filtered = arr.filter((d) => parseMarkdown(d.raw).slug !== parsed.slug);
+  if (!parsed.slug) {
+    throw new Error("El proyecto necesita un título (# Título) para poder guardarse.");
+  }
+
+  let arr = [];
+  try {
+    arr = JSON.parse(localStorage.getItem(KEY) || "[]");
+    if (!Array.isArray(arr)) arr = [];
+  } catch {
+    arr = [];
+  }
+
+  const filtered = arr.filter((d) => {
+    try {
+      return parseMarkdown(d.raw).slug !== parsed.slug;
+    } catch {
+      return true;
+    }
+  });
   filtered.push({ raw, slug: parsed.slug, savedAt: Date.now() });
-  localStorage.setItem(KEY, JSON.stringify(filtered));
+
+  try {
+    localStorage.setItem(KEY, JSON.stringify(filtered));
+  } catch (err) {
+    throw new Error(
+      "No se pudo guardar en este navegador (¿espacio de almacenamiento lleno?)."
+    );
+  }
+
+  // Verify the write actually landed before trusting it.
+  const check = JSON.parse(localStorage.getItem(KEY) || "[]");
+  const saved = check.find((d) => d.slug === parsed.slug);
+  if (!saved) {
+    throw new Error("El guardado no se confirmó. Intenta de nuevo.");
+  }
+
   return parsed;
 }
 

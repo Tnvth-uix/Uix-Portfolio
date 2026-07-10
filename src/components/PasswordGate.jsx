@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Particles from "./Particles";
 
 const PASSWORD = "SomosLosMejoresUIX";
 const KEY = "uix.authed.v1";
@@ -29,6 +30,7 @@ export default function PasswordGate({ children }) {
 
   return (
     <div className="gate">
+      <Particles count={40} />
       <div className="gate-blob" />
       <form className="gate-card" onSubmit={submit}>
         <img src="/logo.png" alt="" className="gate-logo" />

@@ -141,11 +141,14 @@ export default function Presentation({ deck }) {
             ? imgData.images[0]
             : null;
         const revealed = !!inView[i];
+        const tone = i % 2 === 0 ? "tone-a" : "tone-b";
 
         return (
           <section
             key={i}
-            className={`slide ${revealed ? "in-view" : ""} ${bgImage ? "has-bg" : ""}`}
+            className={`slide ${revealed ? "in-view" : ""} ${
+              bgImage ? "has-bg" : tone
+            }`}
             style={
               bgImage
                 ? {

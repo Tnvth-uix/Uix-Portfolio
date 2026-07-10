@@ -78,10 +78,19 @@ export default function UploadPage() {
     handleFile(e.dataTransfer.files?.[0]);
   };
 
+  const [saving, setSaving] = useState(false);
+
   const confirmSave = () => {
-    if (!preview) return;
-    const parsed = saveDeck(preview.raw);
-    router.push(`/projects/${parsed.slug}`);
+    if (!preview || saving) return;
+    setSaving(true);
+    setError("");
+    try {
+      const parsed = saveDeck(preview.raw);
+      router.push(`/projects/${parsed.slug}`);
+    } catch (err) {
+      setSaving(false);
+      setError(err?.message || "No se pudo guardar el Business Case. Intenta de nuevo.");
+    }
   };
 
   const removeSaved = (slug) => {
@@ -151,8 +160,13 @@ export default function UploadPage() {
                   {preview.title}
                 </h2>
               </div>
-              <button className="btn btn-grad" onClick={confirmSave} type="button">
-                Guardar y ver →
+              <button
+                className="btn btn-grad"
+                onClick={confirmSave}
+                type="button"
+                disabled={saving}
+              >
+                {saving ? "Guardando…" : "Guardar y ver →"}
               </button>
             </div>
             <p style={{ color: "var(--ink-soft)", marginBottom: 18 }}>

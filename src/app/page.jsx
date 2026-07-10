@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "../components/DeckCard";
 import Counter from "../components/Counter";
+import Particles from "../components/Particles";
 import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
@@ -32,10 +33,19 @@ const CASES = [
 
 /* Company proof — kept intentionally minimal */
 const STATS = [
-  { big: "+90", desc: "Business Cases entregados" },
-  { big: "+20M", desc: "usuarios en las plataformas UiX" },
-  { big: "+9", desc: "años en México y LATAM" },
-  { big: "1er", desc: "en LATAM en ser nominada" },
+  { big: "+90", desc: "Business Cases entregados", icon: "/iconos/trofeo.png" },
+  { big: "+20M", desc: "usuarios en las plataformas UiX", icon: "/iconos/usuario.png" },
+  { big: "+9", desc: "años en México y LATAM", icon: "/iconos/reloj.png" },
+  { big: "1er", desc: "en LATAM en ser nominada", icon: "/iconos/stars.png" },
+];
+
+/* Floating 3D icons scattered around the hero */
+const HERO_ICONS = [
+  { src: "/iconos/idea.png", cls: "hi-1" },
+  { src: "/iconos/target.png", cls: "hi-2" },
+  { src: "/iconos/gears.png", cls: "hi-3" },
+  { src: "/iconos/design.png", cls: "hi-4" },
+  { src: "/iconos/think.png", cls: "hi-5" },
 ];
 
 export default function Home() {
@@ -54,6 +64,12 @@ export default function Home() {
     <main>
       {/* ================= COMPACT HERO ================= */}
       <section className="ihero ihero-compact">
+        <Particles count={54} />
+        <div className="hero-icons" aria-hidden="true">
+          {HERO_ICONS.map((ic) => (
+            <img src={ic.src} alt="" className={`hero-icon ${ic.cls}`} key={ic.src} />
+          ))}
+        </div>
         <div className="wrap">
           <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
           <h1>
@@ -147,6 +163,7 @@ export default function Home() {
             <div className="stats-grid stats-grid-4">
               {STATS.map((s) => (
                 <div className="stat-cell" key={s.big}>
+                  <img src={s.icon} alt="" className="stat-icon" />
                   <div className="big grad-text">
                     <Counter value={s.big} />
                   </div>
