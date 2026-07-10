@@ -402,6 +402,17 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-height: 120px;
+}
+.deck-thumbnail {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 200px;
+  height: 150px;
+  z-index: 0;
+  opacity: 0.15;
+  pointer-events: none;
 }
 .deck-card .idx {
   font-size: 0.8rem;

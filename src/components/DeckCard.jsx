@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
+import DeckThumbnail from "./DeckThumbnail";
 
 export default function DeckCard({ deck, index, onDelete }) {
   const { mode } = useAuth();
@@ -22,6 +23,7 @@ export default function DeckCard({ deck, index, onDelete }) {
         aria-label={`Ver ${deck.title}`}
       />
       <div className="deck-card-top">
+        <DeckThumbnail title={deck.title} index={index} />
         <div className="idx">{String(index + 1).padStart(2, "0")}</div>
         {!deck.example && mode === "admin" && (
           <button className="card-del" onClick={handleDelete} type="button">
