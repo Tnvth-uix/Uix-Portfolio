@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import HtmlEmbedWithPdf from "../../../components/common/HtmlEmbedWithPdf";
 
 export const metadata = {
   title: "Investigación presencial en México — Business Cases By UPAX",
@@ -20,10 +21,10 @@ export default function InvestigacionPresencialPage() {
           <span className="grad-text">investigaciones presenciales en México</span>
         </h1>
 
-        <div
-          className="embed-card-dark"
-          style={{ marginTop: 40 }}
-          dangerouslySetInnerHTML={{ __html: html }}
+        <HtmlEmbedWithPdf
+          html={html}
+          filename="Investigacion-Presencial.pdf"
+          label="Descargar PDF"
         />
       </div>
     </main>

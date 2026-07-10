@@ -28,13 +28,13 @@ export const SECTIONS = [
   },
   {
     n: 7,
-    href: "/seguridad-informacion",
-    label:
-      "Certificación ISO 27001 o política documentada de seguridad de la información",
+    href: "/business-cases",
+    label: "Experiencia previa en proyectos de UX research y/o CX",
   },
   {
     n: 8,
-    href: "/business-cases",
-    label: "Experiencia previa en proyectos de UX research y/o CX",
+    href: "/seguridad-informacion",
+    label:
+      "Certificación ISO 27001 o política documentada de seguridad de la información",
   },
 ];

@@ -21,12 +21,12 @@ export default function InvestigacionMercadoMexicanoPage() {
           compra.
         </p>
 
-        <div style={{ marginTop: 40 }}>
-          <EmbeddedApp
-            src="/embeds/mercado-mexicano/index.html"
-            title="Reporte de investigación — Deseabilidad"
-          />
-        </div>
+        <EmbeddedApp
+          src="/embeds/mercado-mexicano/index.html"
+          title="Reporte de investigación — Deseabilidad"
+          pdfFilename="PrestaPrenda-Reporte.pdf"
+          pdfLabel="Descargar PDF"
+        />
       </div>
     </main>
   );

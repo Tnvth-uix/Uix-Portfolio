@@ -149,7 +149,6 @@ export default function Presentation({ deck }) {
         <SceneBackground scrollFracRef={scrollFracRef} targetOpacity={zoneOpacity[active] ?? 0.3} />
       )}
       <div className="progress" style={{ width: `${progress}%` }} />
-      <div className="progress-pct">{Math.round(progress)}%</div>
 
       <ImageManager
         slug={deck.slug}

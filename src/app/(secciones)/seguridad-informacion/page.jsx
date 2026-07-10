@@ -9,7 +9,7 @@ export default function SeguridadInformacionPage() {
   return (
     <main className="sec sec-doc">
       <div className="wrap">
-        <div className="eyebrow">Sección 7</div>
+        <div className="eyebrow">Sección 8</div>
         <h1 className="display-sm" style={{ margin: "16px 0 12px", maxWidth: "30ch" }}>
           Certificación ISO 27001 y{" "}
           <span className="grad-text">política de seguridad de la información</span>
