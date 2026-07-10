@@ -6,7 +6,7 @@ export default function ProjectsPage() {
       <div className="wrap">
         <div className="eyebrow">Biblioteca</div>
         <h1 className="display-sm" style={{ margin: "16px 0 12px", maxWidth: "18ch" }}>
-          Todos los <span className="grad-text">Business Cases</span>
+          Todos los <span className="grad-text">Proyectos</span>
         </h1>
         <p className="hero-lead" style={{ marginTop: 8 }}>
           Casos de negocio con estructura de 8 bloques. Cada uno se recorre como una
