@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Particles from "./Particles";
 import { useAuth } from "../contexts/AuthContext";
 
 const PASSWORDS = {
-  "": "viewer",
-  "SomosLosMejoresUIX": "viewer",
-  "Esundemo1": "admin",
+  SomosLosMejoresUIX: "viewer",
+  Esundemo1: "admin",
 };
 
 export default function PasswordGate({ children }) {
@@ -30,12 +29,20 @@ export default function PasswordGate({ children }) {
 
   return (
     <div className="gate">
-      <Particles count={40} />
+      <Particles
+        count={78}
+        speed={3.2}
+        size={1.7}
+        particleOpacity={0.95}
+        linkOpacity={0.42}
+        linkDistance={160}
+        glow
+      />
       <div className="gate-blob" />
       <form className="gate-card" onSubmit={submit}>
         <img src="https://iytpfckxdikpqqzmstyp.supabase.co/storage/v1/object/public/business-case-images/logo.png" alt="" className="gate-logo" />
         <h1>
-          Business <span className="grad-text">Cases</span>
+          Portafolio <span className="grad-text">UiX</span>
         </h1>
         <p>Ingresa la contraseña para continuar.</p>
         <input

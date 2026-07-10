@@ -6,7 +6,15 @@ const COLORS = ["#8C59FE", "#597AFF", "#00C4B3", "#ACE738"];
 
 /* Subtle constellation-style particle field. Canvas-based, low density,
    connects nearby particles with faint lines for a technological feel. */
-export default function Particles({ count = 46 }) {
+export default function Particles({
+  count = 46,
+  speed = 1,
+  size = 1,
+  particleOpacity = 0.6,
+  linkOpacity = 0.14,
+  linkDistance = 120,
+  glow = false,
+}) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -34,9 +42,9 @@ export default function Particles({ count = 46 }) {
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22,
-        r: Math.random() * 1.5 + 0.6,
+        vx: (Math.random() - 0.5) * 0.22 * speed,
+        vy: (Math.random() - 0.5) * 0.22 * speed,
+        r: (Math.random() * 1.5 + 0.6) * size,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
       }));
     };
@@ -64,9 +72,9 @@ export default function Particles({ count = 46 }) {
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.strokeStyle = `rgba(140, 89, 254, ${0.14 * (1 - dist / 120)})`;
-            ctx.lineWidth = 1;
+          if (dist < linkDistance) {
+            ctx.strokeStyle = `rgba(140, 89, 254, ${linkOpacity * (1 - dist / linkDistance)})`;
+            ctx.lineWidth = glow ? 1.25 : 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -79,8 +87,13 @@ export default function Particles({ count = 46 }) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = 0.6;
+        if (glow) {
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = p.color;
+        }
+        ctx.globalAlpha = particleOpacity;
         ctx.fill();
+        ctx.shadowBlur = 0;
         ctx.globalAlpha = 1;
       });
 
@@ -92,7 +105,7 @@ export default function Particles({ count = 46 }) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
     };
-  }, [count]);
+  }, [count, speed, size, particleOpacity, linkOpacity, linkDistance, glow]);
 
   return <canvas ref={canvasRef} className="particles-canvas" aria-hidden="true" />;
 }

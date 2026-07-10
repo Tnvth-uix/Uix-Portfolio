@@ -2278,6 +2278,9 @@ img {
   overflow: hidden;
   padding: 24px;
 }
+.gate .particles-canvas {
+  opacity: 1;
+}
 .gate-blob {
   position: absolute;
   width: 700px;
