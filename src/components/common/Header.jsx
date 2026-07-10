@@ -6,10 +6,10 @@ export default function Header() {
       <div className="wrap hd-inner">
         <Link href="/" className="hd-logo">
           <img src="/logo.png" alt="Logo" />
+          <span className="hd-by">By UPAX</span>
           <span className="hd-word">
             Business <span className="grad-text">Cases</span>
           </span>
-          <span className="hd-by">By UPAX</span>
         </Link>
         <nav className="hd-nav">
           <Link href="/projects">Business Cases</Link>

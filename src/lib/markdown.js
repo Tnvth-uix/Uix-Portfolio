@@ -103,7 +103,8 @@ export function parseMarkdown(raw) {
     .map((s, sIndex) => {
       const body = s.lines.join("\n").trim();
       if (!body && !s.title) return null;
-      const withMeta = markMetaRow(body);
+      const withHeadings = boldLineToHeading(body);
+      const withMeta = markMetaRow(withHeadings);
       const withMarkers = markPending(withMeta, sIndex, () => pendingCounter++);
       return {
         title: s.title,
@@ -120,6 +121,16 @@ export function parseMarkdown(raw) {
     slug: slugify(title),
     slides,
   };
+}
+
+/*
+  A line that is ENTIRELY a bold run (e.g. "**¿Cómo lo resolvimos?**" on
+  its own line) reads as a lead-in label, not real prose. Promoting it to
+  a proper H3 lets it pick up the small-caps + card treatment automatically,
+  turning flat Q&A-style content into distinct visual groups.
+*/
+function boldLineToHeading(body) {
+  return body.replace(/^\*\*([^\n*]+)\*\*\s*$/gm, "### $1");
 }
 
 /*
