@@ -383,27 +383,31 @@ img {
   inset: 0;
   z-index: 3;
 }
+.deck-card-thumb-wrap {
+  position: relative;
+  z-index: 0;
+}
 .deck-thumbnail {
   position: relative;
   z-index: 0;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 21 / 8;
   display: grid;
   place-items: center;
 }
 .deck-thumbnail-icon {
-  width: 76px;
-  height: 76px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(6px);
   display: grid;
   place-items: center;
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.25);
 }
 .deck-thumbnail-icon img {
-  width: 38px;
-  height: 38px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
 }
 .card-del {
@@ -429,18 +433,19 @@ img {
 .deck-card-body {
   position: relative;
   z-index: 1;
-  padding: 22px 26px 26px;
+  padding: 26px 28px 28px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   pointer-events: none;
+  flex: 1;
 }
 .deck-card h3 {
-  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
 }
 .deck-card .go {
   display: inline-flex;
@@ -449,6 +454,8 @@ img {
   font-weight: 700;
   font-size: 0.92rem;
   white-space: nowrap;
+  color: var(--ink-faint);
+  flex-shrink: 0;
 }
 .deck-card .go .arw {
   transition: transform 0.4s var(--ease);

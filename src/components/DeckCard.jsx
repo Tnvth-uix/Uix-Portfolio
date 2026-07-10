@@ -22,12 +22,14 @@ export default function DeckCard({ deck, index, onDelete }) {
         className="card-hit"
         aria-label={`Ver ${deck.title}`}
       />
-      <DeckThumbnail index={index} />
-      {!deck.example && mode === "admin" && (
-        <button className="card-del" onClick={handleDelete} type="button">
-          Eliminar
-        </button>
-      )}
+      <div className="deck-card-thumb-wrap">
+        <DeckThumbnail index={index} />
+        {!deck.example && mode === "admin" && (
+          <button className="card-del" onClick={handleDelete} type="button">
+            Eliminar
+          </button>
+        )}
+      </div>
       <div className="deck-card-body">
         <h3>{deck.title}</h3>
         <span className="go">
