@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import html2pdf from "html2pdf.js";
 import ImageManager from "./ImageManager";
 import TaxonomyBlock from "./TaxonomyBlock";
 import {
@@ -100,9 +99,11 @@ export default function Presentation({ deck }) {
     }
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     const element = document.querySelector(".pres");
     if (!element) return;
+
+    const { default: html2pdf } = await import("html2pdf.js");
 
     const opt = {
       margin: 10,

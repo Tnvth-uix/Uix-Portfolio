@@ -23,21 +23,22 @@ export default function DeckCard({ deck, index, onDelete }) {
         className="card-hit"
         aria-label={`Ver ${deck.title}`}
       />
-      <div className="deck-card-top">
-        <span className="deck-card-index">{String(index + 1).padStart(2, "0")}</span>
-        <span className="deck-card-chip">{deck.example ? "Reporte" : "Case"}</span>
+      <span className="deck-card-bar" aria-hidden />
+      <div className="deck-card-main">
+        <div className="deck-card-meta">
+          <span className="deck-card-index">{String(index + 1).padStart(2, "0")}</span>
+          <span className="deck-card-chip">{deck.example ? "Reporte" : "Case"}</span>
+        </div>
+        <h3>{deck.title}</h3>
       </div>
+      <span className="go" aria-hidden>
+        <span className="arw">→</span>
+      </span>
       {!deck.example && mode === "admin" && (
         <button className="card-del" onClick={handleDelete} type="button">
           Eliminar
         </button>
       )}
-      <div className="deck-card-body">
-        <h3>{deck.title}</h3>
-        <span className="go">
-          Ver <span className="arw">→</span>
-        </span>
-      </div>
     </div>
   );
 }

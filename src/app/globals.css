@@ -354,106 +354,98 @@ img {
 /* ---------- Presentation cards grid ---------- */
 .deck-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 26px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
-@media (max-width: 860px) {
+@media (min-width: 760px) {
   .deck-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
 .deck-card {
   position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  transition:
-    transform 0.35s var(--ease),
-    box-shadow 0.35s var(--ease),
-    border-color 0.35s var(--ease);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  aspect-ratio: 4 / 3;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 12px 14px 12px 0;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    border-color 0.25s var(--ease);
   isolation: isolate;
-  padding: 22px 24px;
-  background: #0c0e16;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-.deck-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--deck-accent, var(--blue));
-  z-index: 1;
-}
-.deck-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 22px 22px;
-  mask-image: linear-gradient(165deg, rgba(0, 0, 0, 0.55), transparent 62%);
-  pointer-events: none;
-  z-index: 0;
 }
 .deck-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--deck-accent, var(--blue)) 38%, rgba(255, 255, 255, 0.1));
-  box-shadow:
-    0 24px 48px -28px rgba(0, 0, 0, 0.55),
-    0 0 0 1px color-mix(in srgb, var(--deck-accent, var(--blue)) 22%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--deck-accent, var(--blue)) 28%, var(--line));
+  box-shadow: 0 10px 28px -22px rgba(23, 18, 50, 0.28);
 }
 .deck-card .card-hit {
   position: absolute;
   inset: 0;
   z-index: 3;
+  border-radius: inherit;
 }
-.deck-card-top {
-  position: relative;
-  z-index: 2;
+.deck-card-bar {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 3px;
+  border-radius: 12px 0 0 12px;
+  background: var(--deck-accent, var(--blue));
+}
+.deck-card-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.deck-card-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 .deck-card-index {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", "Menlo", monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   color: var(--deck-accent, var(--blue));
 }
 .deck-card-chip {
   font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink-faint);
+}
+.deck-card h3 {
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .card-del {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  position: relative;
   z-index: 4;
-  font-size: 0.72rem;
+  flex-shrink: 0;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 5px 13px;
+  padding: 5px 10px;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
@@ -462,88 +454,77 @@ img {
   background: #e5484d;
   border-color: #e5484d;
 }
-.deck-card-body {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  pointer-events: none;
-  margin-top: auto;
-}
-.deck-card h3 {
-  font-size: clamp(1.05rem, 1.8vw, 1.32rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.22;
-  color: rgba(255, 255, 255, 0.94);
-}
 .deck-card .go {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: rgba(255, 255, 255, 0.38);
   flex-shrink: 0;
-  transition: color 0.25s var(--ease);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--ink-faint);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease),
+    transform 0.25s var(--ease);
 }
 .deck-card:hover .go {
   color: var(--deck-accent, var(--blue));
+  border-color: color-mix(in srgb, var(--deck-accent, var(--blue)) 24%, var(--line));
+  background: color-mix(in srgb, var(--deck-accent, var(--blue)) 8%, var(--paper));
 }
 .deck-card .go .arw {
-  transition: transform 0.35s var(--ease);
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.25s var(--ease);
 }
 .deck-card:hover .go .arw {
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 /* Upload teaser card */
 .deck-card.upload {
-  border: 1px dashed rgba(23, 18, 50, 0.16);
-  align-items: flex-start;
-  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 12px 16px;
+  border: 1px dashed var(--line-strong);
+  background: var(--paper);
   text-align: left;
-  background: var(--card);
-  padding: 26px;
-  box-shadow: none;
-}
-.deck-card.upload::before,
-.deck-card.upload::after {
-  display: none;
 }
 .deck-card.upload:hover {
-  transform: translateY(-4px);
-  border-color: rgba(89, 122, 255, 0.35);
-  box-shadow: 0 16px 40px -28px rgba(23, 18, 50, 0.2);
+  transform: translateY(-1px);
+  border-color: var(--blue);
+  box-shadow: 0 10px 28px -22px rgba(23, 18, 50, 0.2);
 }
 .deck-card.upload .plus {
-  width: 48px;
-  height: 48px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
-  background: #0c0e16;
-  border: 1px solid rgba(23, 18, 50, 0.1);
+  background: var(--card);
+  border: 1px solid var(--line);
   display: grid;
   place-items: center;
   color: var(--blue);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 .deck-card.upload h3 {
-  color: var(--ink);
-  font-size: 1.15rem;
+  font-size: 0.94rem;
   font-weight: 700;
+  color: var(--ink);
+  -webkit-line-clamp: 1;
 }
 .deck-card.upload p {
   color: var(--ink-soft);
-  font-size: 0.88rem;
-  line-height: 1.5;
-  margin-top: 8px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  margin-top: 2px;
 }
 
 /* ============================================================

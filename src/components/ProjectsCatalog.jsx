@@ -29,17 +29,17 @@ export default function ProjectsCatalog({ only, exclude, extra = [] }) {
     .filter((d) => (only ? only.includes(d.slug) : true))
     .filter((d) => (exclude ? !exclude.includes(d.slug) : true));
 
-  const visible = [...extra, ...filtered];
+  const visible = [...filtered, ...extra];
 
   return (
-    <div className="deck-grid" style={{ marginTop: 54 }}>
+    <div className="deck-grid" style={{ marginTop: 40 }}>
       {visible.map((d, i) => (
         <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
       ))}
       {mode === "admin" && (
         <Link href="/upload" className="deck-card upload">
+          <div className="plus">+</div>
           <div>
-            <div className="plus">+</div>
             <h3>Nuevo Business Case</h3>
             <p>
               Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
