@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ImageManager from "./ImageManager";
 import TaxonomyBlock from "./TaxonomyBlock";
@@ -14,6 +15,8 @@ import {
 } from "../lib/store";
 import { applyPendingOverrides } from "../lib/markdown";
 
+const SceneBackground = dynamic(() => import("./SceneBackground"), { ssr: false });
+
 export default function Presentation({ deck }) {
   const router = useRouter();
   const [active, setActive] = useState(0);
@@ -22,7 +25,9 @@ export default function Presentation({ deck }) {
   const [pendingOverrides, setPendingOverrides] = useState({});
   const [interstitials, setInterstitials] = useState({});
   const [inView, setInView] = useState({});
+  const [show3D, setShow3D] = useState(false);
   const slideRefs = useRef([]);
+  const scrollFracRef = useRef(0);
 
   const total = deck.slides.length + 1; // + cover
 
@@ -41,6 +46,7 @@ export default function Presentation({ deck }) {
     const onScroll = () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(h > 0 ? (window.scrollY / h) * 100 : 0);
+      scrollFracRef.current = h > 0 ? window.scrollY / h : 0;
       // find active slide
       let cur = 0;
       slideRefs.current.forEach((el, i) => {
@@ -51,6 +57,15 @@ export default function Presentation({ deck }) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Gate the 3D backdrop: skip entirely on reduced-motion, narrow viewports,
+  // or low-end hardware so the chunk often isn't even downloaded.
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const narrow = window.innerWidth < 768;
+    const lowEnd = (navigator.hardwareConcurrency ?? 8) < 4 || (navigator.deviceMemory ?? 8) < 4;
+    if (!reduced && !narrow && !lowEnd) setShow3D(true);
   }, []);
 
   // Progressive disclosure: reveal each slide's content the first time
@@ -99,8 +114,23 @@ export default function Presentation({ deck }) {
 
   const pad = (n) => String(n).padStart(2, "0");
 
+  // Per-slide target opacity for the 3D backdrop: strong behind the cover,
+  // faint behind photo slides (has-bg), medium behind plain-tone slides.
+  const zoneOpacity = useMemo(() => {
+    const arr = [0.55]; // cover
+    deck.slides.forEach((_, i) => {
+      const imgData = imagesData[i];
+      const hasBg = imgData?.layout === "background" && imgData.images?.length > 0;
+      arr.push(hasBg ? 0.12 : 0.4);
+    });
+    return arr;
+  }, [deck.slides, imagesData]);
+
   return (
     <div className="pres">
+      {show3D && (
+        <SceneBackground scrollFracRef={scrollFracRef} targetOpacity={zoneOpacity[active] ?? 0.3} />
+      )}
       <div className="progress" style={{ width: `${progress}%` }} />
       <div className="progress-pct">{Math.round(progress)}%</div>
 
@@ -128,6 +158,7 @@ export default function Presentation({ deck }) {
       >
         <div className="tech-grid" />
         <div className="wrap">
+          <div className="cover-act">Acto I — Apertura</div>
           <div className="client-line">{deck.client}</div>
           <h1 className="typing-caret">{deck.title}</h1>
           <p className="sub">{deck.subtitle}</p>
@@ -139,10 +170,15 @@ export default function Presentation({ deck }) {
       </section>
 
       {interstitials[-1] && (
-        <section
-          className="slide-fullscreen"
-          style={{ backgroundImage: `url(${interstitials[-1]})` }}
-        />
+        <section className="slide-fullscreen">
+          <div className="fs-media" style={{ backgroundImage: `url(${interstitials[-1]})` }} />
+          {deck.slides[0]?.title && (
+            <div className="fs-caption">
+              <div className="fs-caption-eyebrow">Siguiente escena</div>
+              <p>{deck.slides[0].title}</p>
+            </div>
+          )}
+        </section>
       )}
 
       {/* Content slides, with any fullscreen interstitials interleaved right after their section */}
@@ -214,11 +250,15 @@ export default function Presentation({ deck }) {
 
         if (interstitials[i]) {
           nodes.push(
-            <section
-              key={`gap-${i}`}
-              className="slide-fullscreen"
-              style={{ backgroundImage: `url(${interstitials[i]})` }}
-            />
+            <section key={`gap-${i}`} className="slide-fullscreen">
+              <div className="fs-media" style={{ backgroundImage: `url(${interstitials[i]})` }} />
+              {deck.slides[i + 1]?.title && (
+                <div className="fs-caption">
+                  <div className="fs-caption-eyebrow">Siguiente escena</div>
+                  <p>{deck.slides[i + 1].title}</p>
+                </div>
+              )}
+            </section>
           );
         }
 
