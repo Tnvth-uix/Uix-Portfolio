@@ -2747,3 +2747,256 @@ img {
     font-size: 18px;
   }
 }
+
+/* ============================================================
+   References & Governance — Casos de Éxito / Políticas / Soporte
+   ============================================================ */
+.ref-sec {
+  padding-bottom: 56px;
+}
+
+.ref-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.ref-tab {
+  position: relative;
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease),
+    background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.ref-tab:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+.ref-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+@media (max-width: 640px) {
+  .ref-tabs {
+    gap: 8px;
+  }
+  .ref-tab {
+    font-size: 0.8rem;
+    padding: 9px 16px;
+  }
+}
+
+.ref-pane {
+  margin-top: 36px;
+  animation: refFade 0.45s var(--ease) both;
+}
+@keyframes refFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ref-intro {
+  color: var(--ink-soft);
+  font-size: clamp(0.98rem, 1.6vw, 1.1rem);
+  max-width: 62ch;
+  margin-bottom: 32px;
+}
+
+/* --- Casos de Éxito: client reference cards --- */
+.ref-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 780px) {
+  .ref-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.ref-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
+    border-color 0.4s;
+}
+.ref-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -42px rgba(23, 18, 50, 0.35);
+  border-color: var(--line-strong);
+}
+.ref-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ref-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--grad);
+  flex-shrink: 0;
+}
+.ref-card-top h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.ref-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ref-card-body dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.ref-card-body dd {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.ref-email {
+  color: var(--blue);
+  font-weight: 700;
+  border-bottom: 2px solid rgba(89, 122, 255, 0.25);
+  transition: border-color 0.2s;
+}
+.ref-email:hover {
+  border-color: var(--blue);
+}
+
+/* --- Políticas y Confidencialidad --- */
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .policy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.policy-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px 26px;
+  transition: transform 0.4s var(--ease), border-color 0.4s;
+}
+.policy-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--ink);
+}
+.policy-no {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+.policy-card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.policy-card p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* --- Soporte y Comunicación --- */
+.advisor-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px 24px;
+  align-items: center;
+  max-width: 760px;
+}
+.advisor-avatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #171232;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.advisor-info h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.advisor-role {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.advisor-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+@media (max-width: 640px) {
+  .advisor-card {
+    grid-template-columns: auto 1fr;
+    padding: 28px;
+  }
+  .advisor-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+.advisor-grid dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+.advisor-grid dd {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}

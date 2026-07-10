@@ -1,36 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import DeckCard from "../../components/DeckCard";
-import Counter from "../../components/Counter";
+import { useState } from "react";
 import Particles from "../../components/Particles";
-import { getExamples, getAllDecks, deleteDeck } from "../../lib/store";
-import { useAuth } from "../../contexts/AuthContext";
+import Counter from "../../components/Counter";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
-
-/* Headline business cases (business impact up front) */
-const CASES = [
-  {
-    metric: "+40%",
-    copy: "más préstamos gracias a un diseño UX que combina autoservicio intuitivo y soporte con asesor virtual.",
-    client: "Círculo Azteca",
-    href: "/projects/afiliacion-unica-canal-de-adquisicion-circulo-azteca",
-  },
-  {
-    metric: "+30%",
-    copy: "ventas y atención en minutos: así rediseñamos la nueva experiencia móvil SAC de Grupo Elektra.",
-    client: "Grupo Elektra · SAC",
-    href: "/projects",
-  },
-  {
-    metric: "−86%",
-    copy: "en tiempo de contratación. La UX/UI que hizo a Reclutalia reclutar en tiempo récord.",
-    client: "Reclutalia · Grupo Salinas",
-    href: "/projects/reclutalia",
-  },
-];
 
 /* Company proof — kept intentionally minimal */
 const STATS = [
@@ -40,34 +14,176 @@ const STATS = [
   { big: "1er", desc: "en LATAM en ser nominada", icon: "/iconos/stars.png" },
 ];
 
-/* Floating 3D icons scattered around the hero */
-const HERO_ICONS = [
-  { src: "/iconos/idea.png", cls: "hi-1" },
-  { src: "/iconos/target.png", cls: "hi-2" },
-  { src: "/iconos/gears.png", cls: "hi-3" },
-  { src: "/iconos/design.png", cls: "hi-4" },
-  { src: "/iconos/think.png", cls: "hi-5" },
+/* Client references — kept as live proof, not marketing copy */
+const REF_TABS = [
+  { key: "casos", label: "Casos de Éxito" },
+  { key: "politicas", label: "Políticas y Confidencialidad" },
+  { key: "soporte", label: "Soporte y Comunicación" },
 ];
 
+const CONTACTS = [
+  {
+    company: "Grupo Salinas",
+    name: "Nayeli Enedina Zárate Ortiz",
+    role: "Directora de Plataformas Digitales",
+    email: "nzarate@elektra.com.mx",
+  },
+  {
+    company: "Banco Azteca",
+    name: "Raquel Maritza Hernández Ramírez",
+    role: "Directora de Procesos de Investigación y Cobranza",
+    email: "rhramirez@bancoazteca.com.mx",
+  },
+];
+
+const POLICIES = [
+  {
+    no: "01",
+    title: "Acuerdo de Confidencialidad (NDA)",
+    text: "Estamos en plena disposición de firmar el Acuerdo de Confidencialidad (NDA) que se considere necesario para garantizar la protección de la información compartida durante el proceso de evaluación, contratación y ejecución del proyecto.",
+  },
+  {
+    no: "02",
+    title: "Protección y Manejo de la Información",
+    text: "Toda la información proporcionada será tratada con estricta confidencialidad y utilizada exclusivamente para los fines relacionados con el proyecto.",
+  },
+  {
+    no: "03",
+    title: "Propiedad Intelectual",
+    text: "Toda la documentación, entregables, hallazgos, investigaciones, análisis, materiales y demás activos generados, recopilados o desarrollados durante la ejecución del proyecto serán propiedad exclusiva del cliente una vez concluido, conforme a los términos establecidos en el contrato correspondiente.",
+  },
+];
+
+const ADVISOR = {
+  name: "Ana Carolina Quintal Zogbi",
+  role: "Customer Success",
+  channel: "Correo electrónico",
+  email: "ana.quintal@jansan.mx",
+  sla: "Plazo máximo de respuesta de 1 día hábil",
+};
+
+function ReferencesSection() {
+  const [tab, setTab] = useState("casos");
+
+  return (
+    <section className="sec ref-sec">
+      <div className="wrap">
+        <div className="eyebrow">Referencias &amp; Governance</div>
+        <h2 className="display-sm" style={{ margin: "16px 0 0", maxWidth: "26ch" }}>
+          Nuestra <span className="grad-text">experiencia y trayectoria</span>.
+        </h2>
+
+        <nav className="ref-tabs" role="tablist" aria-label="Referencias">
+          {REF_TABS.map((t) => (
+            <button
+              key={t.key}
+              role="tab"
+              aria-selected={tab === t.key}
+              className={`ref-tab ${tab === t.key ? "active" : ""}`}
+              onClick={() => setTab(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </nav>
+
+        {tab === "casos" && (
+          <div className="ref-pane">
+            <p className="ref-intro">
+              Como referencia de nuestra experiencia y trayectoria, compartimos
+              los datos de contacto de algunos de nuestros clientes activos.
+            </p>
+            <div className="ref-cards">
+              {CONTACTS.map((c) => (
+                <div className="ref-card" key={c.email}>
+                  <div className="ref-card-top">
+                    <span className="ref-dot" />
+                    <h3>{c.company}</h3>
+                  </div>
+                  <dl className="ref-card-body">
+                    <div>
+                      <dt>Contacto</dt>
+                      <dd>{c.name}</dd>
+                    </div>
+                    <div>
+                      <dt>Cargo</dt>
+                      <dd>{c.role}</dd>
+                    </div>
+                    <div>
+                      <dt>Correo electrónico</dt>
+                      <dd>
+                        <a href={`mailto:${c.email}`} className="ref-email">
+                          {c.email}
+                        </a>
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "politicas" && (
+          <div className="ref-pane">
+            <p className="ref-intro">
+              Confidencialidad, protección de datos y propiedad intelectual —
+              los tres pilares que rigen cómo tratamos la información de cada proyecto.
+            </p>
+            <div className="policy-grid">
+              {POLICIES.map((p) => (
+                <div className="policy-card" key={p.no}>
+                  <span className="policy-no">{p.no}</span>
+                  <h3>{p.title}</h3>
+                  <p>{p.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "soporte" && (
+          <div className="ref-pane">
+            <p className="ref-intro">Punto focal del proyecto.</p>
+            <div className="advisor-card">
+              <div className="advisor-avatar">
+                {ADVISOR.name
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((w) => w[0])
+                  .join("")}
+              </div>
+              <div className="advisor-info">
+                <h3>{ADVISOR.name}</h3>
+                <span className="advisor-role">{ADVISOR.role}</span>
+              </div>
+              <div className="advisor-grid">
+                <div>
+                  <dt>Medio de comunicación</dt>
+                  <dd>{ADVISOR.channel}</dd>
+                </div>
+                <div>
+                  <dt>Contacto</dt>
+                  <dd>
+                    <a href={`mailto:${ADVISOR.email}`} className="ref-email">
+                      {ADVISOR.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>SLA de respuesta</dt>
+                  <dd>{ADVISOR.sla}</dd>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
-  const { mode } = useAuth();
-  const [decks, setDecks] = useState(getExamples());
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadDecks() {
-      const allDecks = await getAllDecks();
-      setDecks(allDecks);
-      setIsLoading(false);
-    }
-    loadDecks();
-  }, []);
-
-  const handleDelete = async (slug) => {
-    await deleteDeck(slug);
-    setDecks((prev) => prev.filter((d) => d.slug !== slug));
-  };
-
   return (
     <main>
       {/* ================= COMPACT HERO ================= */}
@@ -76,20 +192,12 @@ export default function Home() {
         <div className="wrap">
           <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
           <h1>
-            No diseñamos pantallas, <span className="grad-text">Diseñamos experiencia de usuario</span>.
+            No diseñamos pantallas, <span className="grad-text">Diseñamos experiencias</span>.
           </h1>
           <p className="lead">
-            Transformacios procesos complicados en experiencias simples.
-            Explora el impactor eal caso por caso.
+            Transformamos procesos complicados en experiencias simples.
+            Explora el impacto real caso por caso.
           </p>
-          <div className="hero-cta">
-            <Link href="#casos" className="btn btn-grad">
-              Ver Proyectos ↓
-            </Link>
-            <a href="mailto:contacto@uixdesign.com" className="btn btn-ghost">
-              Hablemos
-            </a>
-          </div>
 
           <p className="cert-discreet">
             Certificados por {CERTS.join(" · ")}
@@ -97,62 +205,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= HEADLINE CASES ================= */}
-      <section className="sec" id="casos" style={{ paddingBottom: 40 }}>
-        <div className="wrap">
-          <div className="eyebrow">Business Cases destacados</div>
-          <h2 className="display-sm" style={{ margin: "16px 0 0", maxWidth: "22ch" }}>
-            El impacto que genera un buen{" "}
-            <span className="grad-text">diseño de experiencia</span>.
-          </h2>
-
-          <div className="cases">
-            {CASES.map((c) => (
-              <Link href={c.href} className="case" key={c.metric}>
-                <div className="metric-big grad-text">
-                  <Counter value={c.metric} />
-                </div>
-                <div className="copy">
-                  {c.copy}
-                  <span className="client">{c.client}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================= ALL BUSINESS CASES ================= */}
-      <section className="sec" style={{ paddingTop: 40 }}>
-        <div className="wrap">
-          <div className="sec-head">
-            <div>
-              <div className="eyebrow">Explora la biblioteca</div>
-              <h2>Todos los Proyectos</h2>
-            </div>
-            <Link href="/projects" className="btn btn-ghost">
-              Ver todos →
-            </Link>
-          </div>
-          <div className="deck-grid">
-            {decks.slice(0, 4).map((d, i) => (
-              <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
-            ))}
-            {mode === "admin" && (
-              <Link href="/upload" className="deck-card upload">
-                <div>
-                  <div className="plus">+</div>
-                  <h3>Nuevo Proyecto</h3>
-                  <p>
-                    Sube un reporte <strong>.md</strong> y conviértelo en un Business
-                    Case al instante.
-                  </p>
-                </div>
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* ================= REFERENCES & GOVERNANCE ================= */}
+      <ReferencesSection />
 
       {/* ================= MINIMAL COMPANY PROOF ================= */}
       <section className="stats-band stats-band-slim">
