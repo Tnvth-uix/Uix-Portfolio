@@ -13,6 +13,20 @@ export function slugify(str) {
     .slice(0, 60);
 }
 
+/* Strips a leading "Bloque N — " / "Bloque N:" / "Bloque N -" prefix. */
+function stripBlockPrefix(title) {
+  const stripped = title.replace(/^\s*bloque\s*\d+\s*[:\-—–]*\s*/i, "").trim();
+  return stripped || title;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 /*
   Convention for uploaded markdown:
 
@@ -27,6 +41,10 @@ export function slugify(str) {
 
   The H1 becomes the cover slide. Every H2 becomes its own slide.
   Content between H2s is rendered as markdown (bold, lists, links, quotes).
+
+  Missing/pending data can be marked inline as [PENDIENTE], [TODO] or
+  [FALTA: descripción] — these render as clickable chips the viewer can
+  fill in, persisted locally per business case.
 */
 export function parseMarkdown(raw) {
   const text = String(raw).replace(/\r\n/g, "\n").trim();
@@ -49,7 +67,7 @@ export function parseMarkdown(raw) {
       continue;
     }
     if (h2) {
-      current = { title: h2[1].trim(), lines: [] };
+      current = { title: stripBlockPrefix(h2[1].trim()), lines: [] };
       sections.push(current);
       continue;
     }
@@ -72,13 +90,15 @@ export function parseMarkdown(raw) {
     if (current) current.lines.push(line);
   }
 
+  let pendingCounter = 0;
   const slides = sections
-    .map((s) => {
+    .map((s, sIndex) => {
       const body = s.lines.join("\n").trim();
       if (!body && !s.title) return null;
+      const withMarkers = markPending(body, sIndex, () => pendingCounter++);
       return {
         title: s.title,
-        html: marked.parse(body),
+        html: marked.parse(withMarkers),
         metrics: extractMetrics(body),
       };
     })
@@ -94,6 +114,24 @@ export function parseMarkdown(raw) {
 }
 
 /*
+  Replaces [PENDIENTE], [TODO] and [FALTA: label] markers with a stable,
+  clickable inline chip. The key is deterministic (slide index + order)
+  so a saved override always maps back to the right marker on re-parse.
+*/
+function markPending(body, slideIndex, nextId) {
+  return body.replace(
+    /\[(PENDIENTE|TODO|FALTA)\s*:?\s*([^\]]*)\]/gi,
+    (_match, kind, label) => {
+      const key = `s${slideIndex}-${nextId()}`;
+      const cleanLabel = (label || kind).trim() || "Falta información";
+      return `<span class="pending-mark" data-pending-key="${key}" data-pending-label="${escapeHtml(
+        cleanLabel
+      )}">⚠ ${escapeHtml(cleanLabel)} <em>✎ editar</em></span>`;
+    }
+  );
+}
+
+/*
   Heuristic: pull out standalone "NN% — label" or "**Label** value" style
   metrics so we can render big number cards. Kept conservative so it only
   fires on clearly numeric bullet lines.
@@ -106,4 +144,23 @@ function extractMetrics(body) {
     metrics.push({ v: m[1].trim(), k: m[2].replace(/\*\*/g, "").trim() });
   }
   return metrics.length >= 2 && metrics.length <= 6 ? metrics : [];
+}
+
+/*
+  Substitutes already-saved override values into rendered pending-mark
+  spans. Called at render time (not parse time) so it can react to
+  localStorage without re-parsing the whole deck.
+*/
+export function applyPendingOverrides(html, overrides) {
+  if (!overrides || !Object.keys(overrides).length) return html;
+  return html.replace(
+    /<span class="pending-mark" data-pending-key="([^"]+)" data-pending-label="([^"]*)">.*?<\/span>/g,
+    (match, key, label) => {
+      const val = overrides[key];
+      if (!val) return match;
+      return `<span class="pending-mark resolved" data-pending-key="${key}" data-pending-label="${label}">${escapeHtml(
+        val
+      )} <em>✎</em></span>`;
+    }
+  );
 }

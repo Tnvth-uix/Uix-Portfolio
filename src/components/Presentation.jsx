@@ -4,13 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ImageManager from "./ImageManager";
-import { getDeckImages, deleteDeck } from "../lib/store";
+import TaxonomyBlock from "./TaxonomyBlock";
+import {
+  getDeckImages,
+  deleteDeck,
+  getPendingOverrides,
+  savePendingOverride,
+} from "../lib/store";
+import { applyPendingOverrides } from "../lib/markdown";
 
 export default function Presentation({ deck }) {
   const router = useRouter();
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
   const [imagesData, setImagesData] = useState({});
+  const [pendingOverrides, setPendingOverrides] = useState({});
+  const [inView, setInView] = useState({});
   const slideRefs = useRef([]);
 
   const total = deck.slides.length + 1; // + cover
@@ -19,6 +28,7 @@ export default function Presentation({ deck }) {
 
   useEffect(() => {
     refreshImages();
+    setPendingOverrides(getPendingOverrides(deck.slug));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deck.slug]);
 
@@ -38,6 +48,26 @@ export default function Presentation({ deck }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Progressive disclosure: reveal each slide's content the first time
+  // it enters the viewport, instead of showing everything at once.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = slideRefs.current.indexOf(entry.target);
+            if (idx !== -1) {
+              setInView((prev) => (prev[idx] ? prev : { ...prev, [idx]: true }));
+            }
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    slideRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, [deck.slides.length]);
+
   const goTo = (i) => {
     slideRefs.current[i]?.scrollIntoView({ behavior: "smooth" });
   };
@@ -49,11 +79,25 @@ export default function Presentation({ deck }) {
     }
   };
 
+  const handlePendingClick = (e) => {
+    const chip = e.target.closest(".pending-mark");
+    if (!chip) return;
+    const key = chip.getAttribute("data-pending-key");
+    const label = chip.getAttribute("data-pending-label");
+    const current = pendingOverrides[key] || "";
+    const value = window.prompt(`Completar: ${label}`, current);
+    if (value !== null && value.trim()) {
+      const next = savePendingOverride(deck.slug, key, value.trim());
+      setPendingOverrides(next);
+    }
+  };
+
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
     <div className="pres">
       <div className="progress" style={{ width: `${progress}%` }} />
+      <div className="progress-pct">{Math.round(progress)}%</div>
 
       <ImageManager
         slug={deck.slug}
@@ -77,9 +121,10 @@ export default function Presentation({ deck }) {
         className="slide slide-cover"
         ref={(el) => (slideRefs.current[0] = el)}
       >
+        <div className="tech-grid" />
         <div className="wrap">
           <div className="client-line">{deck.client}</div>
-          <h1>{deck.title}</h1>
+          <h1 className="typing-caret">{deck.title}</h1>
           <p className="sub">{deck.subtitle}</p>
         </div>
         <div className="scroll-hint">↓ Desplázate para recorrer el caso</div>
@@ -89,44 +134,69 @@ export default function Presentation({ deck }) {
       </section>
 
       {/* Content slides */}
-      {deck.slides.map((s, i) => (
-        <section
-          key={i}
-          className="slide"
-          ref={(el) => (slideRefs.current[i + 1] = el)}
-        >
-          <div className="wrap slide-body">
-            <div className="slide-label">
-              <div className="kn">{pad(i + 1)}</div>
-              <h2>{s.title}</h2>
-              <div className="bar" />
+      {deck.slides.map((s, i) => {
+        const imgData = imagesData[i];
+        const bgImage =
+          imgData?.layout === "background" && imgData.images?.length > 0
+            ? imgData.images[0]
+            : null;
+        const revealed = !!inView[i];
+
+        return (
+          <section
+            key={i}
+            className={`slide ${revealed ? "in-view" : ""} ${bgImage ? "has-bg" : ""}`}
+            style={
+              bgImage
+                ? {
+                    backgroundImage: `linear-gradient(180deg, rgba(23,18,50,.78), rgba(23,18,50,.92)), url(${bgImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }
+                : undefined
+            }
+            ref={(el) => (slideRefs.current[i + 1] = el)}
+          >
+            <div className="wrap slide-body">
+              <div className="slide-label">
+                <div className="kn">{pad(i + 1)}</div>
+                <h2>{s.title}</h2>
+                <div className="bar" />
+              </div>
+              <div>
+                {s.metrics.length > 0 && (
+                  <div className="metric-grid">
+                    {s.metrics.map((m, j) => (
+                      <div className="metric" key={j} style={{ "--i": j }}>
+                        <div className="v grad-text">{m.v}</div>
+                        <div className="k">{m.k}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div
+                  className="md"
+                  onClick={handlePendingClick}
+                  dangerouslySetInnerHTML={{
+                    __html: applyPendingOverrides(s.html, pendingOverrides),
+                  }}
+                />
+                {i === 0 && <TaxonomyBlock slug={deck.slug} raw={deck.raw || ""} />}
+                {!bgImage && imgData?.images?.length > 0 && (
+                  <div className={`img-block layout-${imgData.layout || "single"}`}>
+                    {imgData.images.map((src, k) => (
+                      <img src={src} alt="" key={k} style={{ "--i": k }} />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-            <div>
-              {s.metrics.length > 0 && (
-                <div className="metric-grid">
-                  {s.metrics.map((m, j) => (
-                    <div className="metric" key={j}>
-                      <div className="v grad-text">{m.v}</div>
-                      <div className="k">{m.k}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="md" dangerouslySetInnerHTML={{ __html: s.html }} />
-              {imagesData[i]?.images?.length > 0 && (
-                <div className={`img-block layout-${imagesData[i].layout || "single"}`}>
-                  {imagesData[i].images.map((src, k) => (
-                    <img src={src} alt="" key={k} />
-                  ))}
-                </div>
-              )}
+            <div className="slide-num">
+              {pad(i + 2)} / {pad(total)}
             </div>
-          </div>
-          <div className="slide-num">
-            {pad(i + 2)} / {pad(total)}
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       {/* Outro */}
       <section className="sec">

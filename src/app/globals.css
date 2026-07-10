@@ -192,6 +192,20 @@ img {
   height: 34px;
   object-fit: contain;
 }
+.hd-by {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  align-self: flex-end;
+  margin-bottom: 3px;
+}
+@media (max-width: 560px) {
+  .hd-by {
+    display: none;
+  }
+}
 .hd-nav {
   display: flex;
   align-items: center;
@@ -507,6 +521,50 @@ img {
   padding: 100px 0;
   position: relative;
   border-bottom: 1px solid var(--line);
+  transition: background 0.4s;
+}
+
+/* Progressive disclosure — content reveals once the slide scrolls into view */
+.slide .slide-label,
+.slide .md {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.slide.in-view .slide-label {
+  opacity: 1;
+  transform: none;
+}
+.slide.in-view .md {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.12s;
+}
+.metric {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease),
+    box-shadow 0.3s, border-color 0.3s;
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.slide.in-view .metric {
+  opacity: 1;
+  transform: none;
+}
+.metric:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -32px rgba(23, 18, 50, 0.4);
+  border-color: var(--line-strong);
+}
+.img-block img {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: calc(0.2s + var(--i, 0) * 90ms);
+}
+.slide.in-view .img-block img {
+  opacity: 1;
+  transform: none;
 }
 .slide-num {
   position: absolute;
@@ -528,6 +586,41 @@ img {
   background: var(--ink);
   color: var(--paper);
   border-bottom: none;
+  overflow: hidden;
+}
+.tech-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(246, 245, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 245, 241, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000 40%, transparent 90%);
+}
+.slide-cover .wrap {
+  position: relative;
+  z-index: 1;
+}
+.typing-caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.08em;
+  background: var(--green);
+  vertical-align: -0.05em;
+  animation: caretBlink 1.1s step-end infinite;
+}
+@keyframes caretBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 .slide-cover .eyebrow {
   color: rgba(246, 245, 241, 0.65);
@@ -761,6 +854,26 @@ img {
   background: var(--grad);
   z-index: 200;
   transition: width 0.1s linear;
+}
+.progress-pct {
+  position: fixed;
+  top: 12px;
+  right: 22px;
+  z-index: 200;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+@media (max-width: 900px) {
+  .progress-pct {
+    display: none;
+  }
 }
 
 /* ============================================================
@@ -1496,4 +1609,252 @@ img {
   border: 1px solid var(--line);
   display: block;
   object-fit: cover;
+}
+
+.img-hint {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Section background images — light text over a covering photo
+   ============================================================ */
+.slide.has-bg {
+  color: rgba(244, 246, 251, 0.92);
+}
+.slide.has-bg .slide-label .kn {
+  color: rgba(244, 246, 251, 0.25);
+}
+.slide.has-bg .slide-label h2 {
+  color: var(--paper);
+}
+.slide.has-bg .slide-label .bar {
+  background: var(--grad);
+}
+.slide.has-bg .md {
+  color: rgba(244, 246, 251, 0.82);
+}
+.slide.has-bg .md h3,
+.slide.has-bg .md h4,
+.slide.has-bg .md strong {
+  color: var(--paper);
+}
+.slide.has-bg .md blockquote {
+  color: var(--paper);
+}
+.slide.has-bg .metric {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+.slide.has-bg .metric .k {
+  color: rgba(244, 246, 251, 0.6);
+}
+.slide.has-bg .slide-num {
+  color: rgba(244, 246, 251, 0.5);
+}
+.slide.has-bg .tax-chip {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(244, 246, 251, 0.85);
+}
+.slide.has-bg .tax-group-head h4 {
+  color: var(--paper);
+}
+
+/* ============================================================
+   Pending-data markers — [PENDIENTE] / [TODO] / [FALTA: ...]
+   ============================================================ */
+.pending-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 12px;
+  border-radius: 100px;
+  background: rgba(229, 72, 77, 0.1);
+  color: #b3261e;
+  font-weight: 700;
+  font-size: 0.88em;
+  cursor: pointer;
+  border: 1px dashed rgba(229, 72, 77, 0.4);
+  transition: background 0.2s, border-color 0.2s;
+}
+.pending-mark:hover {
+  background: rgba(229, 72, 77, 0.18);
+}
+.pending-mark em {
+  font-style: normal;
+  opacity: 0.75;
+  font-size: 0.85em;
+}
+.pending-mark.resolved {
+  background: rgba(0, 196, 179, 0.1);
+  color: var(--ink);
+  border: 1px solid rgba(0, 196, 179, 0.35);
+}
+.pending-mark.resolved:hover {
+  background: rgba(0, 196, 179, 0.18);
+}
+.pending-mark.resolved em {
+  color: var(--teal);
+  opacity: 1;
+}
+
+/* ============================================================
+   Taxonomy chips — services / methodologies / methods
+   ============================================================ */
+.tax-block {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.tax-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.tax-group-head h4 {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.tax-edit-btn {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink-faint);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.tax-edit-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.tax-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tax-chip {
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 15px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  color: var(--ink-faint);
+  cursor: default;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.tax-chip.active {
+  background: var(--grad);
+  border-color: transparent;
+  color: #171232;
+}
+.tax-chip.editable {
+  cursor: pointer;
+}
+.tax-chip.editable:hover {
+  transform: translateY(-2px);
+}
+.tax-chip.editable:not(.active) {
+  border-style: dashed;
+}
+.tax-empty {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ============================================================
+   Password gate
+   ============================================================ */
+.gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+}
+.gate-blob {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(140, 89, 254, 0.28), transparent 65%);
+  top: -220px;
+  right: -160px;
+  filter: blur(10px);
+  pointer-events: none;
+}
+.gate-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(246, 245, 241, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 40px 34px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.gate-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  margin: 0 auto 18px;
+}
+.gate-card h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--paper);
+}
+.gate-card p {
+  margin-top: 10px;
+  color: rgba(246, 245, 241, 0.6);
+  font-size: 0.92rem;
+}
+.gate-card input {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(246, 245, 241, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--paper);
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.gate-card input::placeholder {
+  color: rgba(246, 245, 241, 0.4);
+}
+.gate-card input:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+.gate-error {
+  margin-top: 10px;
+  color: #ff8a8a;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.gate-card .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 20px;
 }

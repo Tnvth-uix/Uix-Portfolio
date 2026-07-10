@@ -29,6 +29,8 @@ El principal obstáculo a resolver.
 ## Resultados
 - 30% — Reducción de tiempos
 - 92% — Tasa de éxito
+
+Impacto en negocio: [FALTA: cifra de conversión]
 `;
 
 export default function UploadPage() {
@@ -212,6 +214,19 @@ export default function UploadPage() {
 ## Resultados
 - 30% — Reducción de tiempos
 - 92% — Tasa de éxito`}</pre>
+        </div>
+
+        <div className="hint-card">
+          <h4>Marca datos pendientes o faltantes</h4>
+          <p style={{ color: "var(--ink-soft)", marginBottom: 12, fontSize: "0.92rem" }}>
+            Usa <strong>[PENDIENTE]</strong>, <strong>[TODO]</strong> o{" "}
+            <strong>[FALTA: descripción]</strong> donde falte información. Se
+            muestran como chips clicables dentro del Business Case para
+            completarlos ahí mismo.
+          </p>
+          <pre>{`## Resultados
+Impacto de negocio: [FALTA: cifra de conversión]
+Tiempo promedio: [PENDIENTE]`}</pre>
         </div>
       </div>
     </main>

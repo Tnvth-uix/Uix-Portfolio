@@ -36,8 +36,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="wrap ft-meta" style={{ marginTop: 40 }}>
-        © {new Date().getFullYear()} UiX Portafolio · Todos los derechos
-        reservados · Política de privacidad
+        © {new Date().getFullYear()} Business Cases · By UPAX · Todos los
+        derechos reservados · Política de privacidad
       </div>
     </footer>
   );

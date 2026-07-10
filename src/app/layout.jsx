@@ -1,11 +1,12 @@
 import "./globals.css";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
+import PasswordGate from "../components/PasswordGate";
 
 export const metadata = {
-  title: "UiX Portfolio — Presentaciones",
+  title: "Business Cases — By UPAX",
   description:
-    "Portafolio de casos de estudio UX/UI. Sube un reporte en Markdown y conviértelo en una presentación.",
+    "Casos de negocio UX/UI. Sube un reporte en Markdown y conviértelo en un Business Case.",
 };
 
 export default function RootLayout({ children }) {
@@ -18,9 +19,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <PasswordGate>
+          <Header />
+          {children}
+          <Footer />
+        </PasswordGate>
       </body>
     </html>
   );

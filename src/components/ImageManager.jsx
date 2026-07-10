@@ -12,6 +12,7 @@ const LAYOUTS = [
   { id: "single", label: "Una imagen grande" },
   { id: "grid2", label: "Cuadrícula 2 columnas" },
   { id: "row", label: "Carrusel horizontal" },
+  { id: "background", label: "Fondo de sección" },
 ];
 
 export default function ImageManager({ slug, sections, onChange }) {
@@ -90,6 +91,10 @@ export default function ImageManager({ slug, sections, onChange }) {
                 </button>
               ))}
             </div>
+
+            {current.layout === "background" && (
+              <p className="img-hint">Se usa solo la primera imagen como fondo.</p>
+            )}
 
             <label className="img-modal-label">Subir imagen</label>
             <div
