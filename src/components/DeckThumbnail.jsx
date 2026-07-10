@@ -22,18 +22,10 @@ const ICONS = [
   "whatsapp.png",
 ];
 
-export default function DeckThumbnail({ index }) {
-  const [color1, color2] = PALETTES[index % PALETTES.length];
-  const icon = ICONS[index % ICONS.length];
+export function getPalette(index) {
+  return PALETTES[index % PALETTES.length];
+}
 
-  return (
-    <div
-      className="deck-thumbnail"
-      style={{ background: `linear-gradient(135deg, ${color1}, ${color2})` }}
-    >
-      <div className="deck-thumbnail-icon">
-        <img src={`/iconos/${icon}`} alt="" />
-      </div>
-    </div>
-  );
+export function getIcon(index) {
+  return ICONS[index % ICONS.length];
 }
