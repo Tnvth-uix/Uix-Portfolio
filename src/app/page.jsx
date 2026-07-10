@@ -15,7 +15,7 @@ const CASES = [
     metric: "+40%",
     copy: "más préstamos gracias a un diseño UX que combina autoservicio intuitivo y soporte con asesor virtual.",
     client: "Círculo Azteca",
-    href: "/projects/afiliacion-unica",
+    href: "/projects/afiliacion-unica-canal-de-adquisicion-circulo-azteca",
   },
   {
     metric: "+30%",

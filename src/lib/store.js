@@ -5,6 +5,7 @@ const KEY = "uix.presentations.v1";
 const IMG_KEY = "uix.images.v1";
 const PENDING_KEY = "uix.pending.v1";
 const TAX_KEY = "uix.taxonomy.v1";
+const INTER_KEY = "uix.interstitials.v1";
 
 /* Example decks are always available and marked read-only. */
 export function getExamples() {
@@ -82,6 +83,7 @@ export function deleteDeck(slug) {
   deleteDeckImages(slug);
   deleteDeckPending(slug);
   deleteDeckTaxonomy(slug);
+  deleteDeckInterstitials(slug);
 }
 
 /* ============================================================
@@ -240,4 +242,51 @@ export function deleteDeckTaxonomy(slug) {
   const store = readTaxStore();
   delete store[slug];
   writeTaxStore(store);
+}
+
+/* ============================================================
+   Fullscreen interstitials — a single full-bleed image inserted
+   between two sections (or right after the cover). Keyed by the
+   index of the section it comes AFTER; -1 means right after the
+   cover, before the first section.
+   Shape: { [slug]: { [afterIndex]: dataUrl } }
+   ============================================================ */
+
+function readInterStore() {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(INTER_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function writeInterStore(data) {
+  localStorage.setItem(INTER_KEY, JSON.stringify(data));
+}
+
+export function getDeckInterstitials(slug) {
+  return readInterStore()[slug] || {};
+}
+
+export function setInterstitial(slug, afterIndex, dataUrl) {
+  const store = readInterStore();
+  const deck = { ...(store[slug] || {}) };
+  deck[afterIndex] = dataUrl;
+  store[slug] = deck;
+  writeInterStore(store);
+}
+
+export function removeInterstitial(slug, afterIndex) {
+  const store = readInterStore();
+  const deck = { ...(store[slug] || {}) };
+  delete deck[afterIndex];
+  store[slug] = deck;
+  writeInterStore(store);
+}
+
+export function deleteDeckInterstitials(slug) {
+  const store = readInterStore();
+  delete store[slug];
+  writeInterStore(store);
 }

@@ -895,6 +895,46 @@ img {
 .md hr {
   border: none;
   border-top: 1px solid var(--line);
+  opacity: 0.6;
+}
+.md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+.md th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--line-strong);
+}
+.md td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.md tr:last-child td {
+  border-bottom: none;
+}
+.md td:first-child,
+.md th:first-child {
+  font-weight: 800;
+  color: var(--ink);
+  width: 28%;
+}
+.slide.has-bg .md th,
+.slide.has-bg .md td {
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(244, 246, 251, 0.82);
+}
+.slide.has-bg .md td:first-child,
+.slide.has-bg .md th:first-child {
+  color: var(--paper);
 }
 
 /* Metric cards inside content when detected */
@@ -1803,6 +1843,51 @@ img {
   font-size: 0.78rem;
   color: var(--ink-faint);
   font-weight: 600;
+}
+.img-mode-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.img-mode-btn {
+  flex: 1;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.img-mode-btn.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+/* ============================================================
+   Fullscreen interstitial — a full-bleed photo break between
+   two Business Case sections.
+   ============================================================ */
+.slide-fullscreen {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.slide-fullscreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(23, 18, 50, 0.05),
+    rgba(23, 18, 50, 0.35)
+  );
 }
 
 /* ============================================================

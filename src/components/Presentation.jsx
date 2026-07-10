@@ -10,6 +10,7 @@ import {
   deleteDeck,
   getPendingOverrides,
   savePendingOverride,
+  getDeckInterstitials,
 } from "../lib/store";
 import { applyPendingOverrides } from "../lib/markdown";
 
@@ -19,12 +20,16 @@ export default function Presentation({ deck }) {
   const [progress, setProgress] = useState(0);
   const [imagesData, setImagesData] = useState({});
   const [pendingOverrides, setPendingOverrides] = useState({});
+  const [interstitials, setInterstitials] = useState({});
   const [inView, setInView] = useState({});
   const slideRefs = useRef([]);
 
   const total = deck.slides.length + 1; // + cover
 
-  const refreshImages = () => setImagesData(getDeckImages(deck.slug));
+  const refreshImages = () => {
+    setImagesData(getDeckImages(deck.slug));
+    setInterstitials(getDeckInterstitials(deck.slug));
+  };
 
   useEffect(() => {
     refreshImages();
@@ -133,8 +138,15 @@ export default function Presentation({ deck }) {
         </div>
       </section>
 
-      {/* Content slides */}
-      {deck.slides.map((s, i) => {
+      {interstitials[-1] && (
+        <section
+          className="slide-fullscreen"
+          style={{ backgroundImage: `url(${interstitials[-1]})` }}
+        />
+      )}
+
+      {/* Content slides, with any fullscreen interstitials interleaved right after their section */}
+      {deck.slides.flatMap((s, i) => {
         const imgData = imagesData[i];
         const bgImage =
           imgData?.layout === "background" && imgData.images?.length > 0
@@ -143,7 +155,7 @@ export default function Presentation({ deck }) {
         const revealed = !!inView[i];
         const tone = i % 2 === 0 ? "tone-a" : "tone-b";
 
-        return (
+        const nodes = [
           <section
             key={i}
             className={`slide ${revealed ? "in-view" : ""} ${
@@ -197,8 +209,20 @@ export default function Presentation({ deck }) {
             <div className="slide-num">
               {pad(i + 2)} / {pad(total)}
             </div>
-          </section>
-        );
+          </section>,
+        ];
+
+        if (interstitials[i]) {
+          nodes.push(
+            <section
+              key={`gap-${i}`}
+              className="slide-fullscreen"
+              style={{ backgroundImage: `url(${interstitials[i]})` }}
+            />
+          );
+        }
+
+        return nodes;
       })}
 
       {/* Outro */}
