@@ -1,6 +1,8 @@
 import "./globals.css";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
+import BackToTop from "../components/common/BackToTop";
+import PageTransition from "../components/common/PageTransition";
 import PasswordGate from "../components/PasswordGate";
 import { AuthProvider } from "../contexts/AuthContext";
 
@@ -23,8 +25,9 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <PasswordGate>
             <Header />
-            {children}
+            <PageTransition>{children}</PageTransition>
             <Footer />
+            <BackToTop />
           </PasswordGate>
         </AuthProvider>
       </body>

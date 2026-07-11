@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DeckCard from "./DeckCard";
+import Reveal from "./common/Reveal";
 import { getExamples, getAllDecks, deleteDeck } from "../lib/store";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -34,18 +35,22 @@ export default function ProjectsCatalog({ only, exclude, extra = [] }) {
   return (
     <div className="deck-grid" style={{ marginTop: 40 }}>
       {visible.map((d, i) => (
-        <DeckCard deck={d} index={i} key={d.slug} onDelete={handleDelete} />
+        <Reveal key={d.slug} delay={Math.min(i * 70, 420)} className="reveal-deck">
+          <DeckCard deck={d} index={i} onDelete={handleDelete} />
+        </Reveal>
       ))}
       {mode === "admin" && (
-        <Link href="/upload" className="deck-card upload">
-          <div className="plus">+</div>
-          <div>
-            <h3>Nuevo Business Case</h3>
-            <p>
-              Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
-            </p>
-          </div>
-        </Link>
+        <Reveal delay={Math.min(visible.length * 70, 420)} className="reveal-deck">
+          <Link href="/upload" className="deck-card upload">
+            <div className="plus">+</div>
+            <div>
+              <h3>Nuevo Business Case</h3>
+              <p>
+                Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
+              </p>
+            </div>
+          </Link>
+        </Reveal>
       )}
     </div>
   );

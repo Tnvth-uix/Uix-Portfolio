@@ -2,13 +2,52 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { SECTIONS } from "../../data/sections";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const navRef = useRef(null);
+  const itemRefs = useRef({});
+  const [indicator, setIndicator] = useState({ top: 0, height: 0, opacity: 0 });
+
+  const activeHref = SECTIONS.find((s) => s.href === pathname)?.href;
+
+  const moveIndicatorTo = useCallback((href) => {
+    const el = itemRefs.current[href];
+    const nav = navRef.current;
+    if (!el || !nav) return;
+    const elRect = el.getBoundingClientRect();
+    const navRect = nav.getBoundingClientRect();
+    setIndicator({
+      top: elRect.top - navRect.top,
+      height: elRect.height,
+      opacity: 1,
+    });
+  }, []);
+
+  // "Magic pill" nav indicator: slides between items on hover, and snaps
+  // back to the active section on mouse-leave/route change/resize.
+  useEffect(() => {
+    if (!activeHref) {
+      setIndicator((prev) => ({ ...prev, opacity: 0 }));
+      return;
+    }
+    const id = requestAnimationFrame(() => moveIndicatorTo(activeHref));
+    const onResize = () => moveIndicatorTo(activeHref);
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [activeHref, collapsed, open, moveIndicatorTo]);
+
+  const handleMouseLeave = () => {
+    if (activeHref) moveIndicatorTo(activeHref);
+    else setIndicator((prev) => ({ ...prev, opacity: 0 }));
+  };
 
   return (
     <>
@@ -67,15 +106,28 @@ export default function Sidebar() {
             <span aria-hidden>×</span>
           </button>
         </div>
-        <nav className="sb-nav">
+        <nav className="sb-nav" ref={navRef} onMouseLeave={handleMouseLeave}>
+          <div
+            className="sb-indicator"
+            style={{
+              transform: `translateY(${indicator.top}px)`,
+              height: indicator.height,
+              opacity: indicator.opacity,
+            }}
+            aria-hidden="true"
+          />
           {SECTIONS.map((s) => {
             const active = pathname === s.href;
             return (
               <Link
                 key={s.href}
                 href={s.href}
+                ref={(el) => {
+                  itemRefs.current[s.href] = el;
+                }}
                 className={`sb-item ${active ? "sb-item-active" : ""}`}
                 onClick={() => setOpen(false)}
+                onMouseEnter={() => moveIndicatorTo(s.href)}
               >
                 <span className="sb-num">{s.n}</span>
                 <span className="sb-label">{s.label}</span>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Particles from "../../components/Particles";
 import Counter from "../../components/Counter";
+import Reveal from "../../components/common/Reveal";
 
 const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
@@ -68,12 +69,15 @@ function ReferencesSection() {
   return (
     <section className="sec ref-sec">
       <div className="wrap">
-        <div className="eyebrow">Referencias &amp; Governance</div>
-        <h2 className="display-sm" style={{ margin: "16px 0 0", maxWidth: "26ch" }}>
-          Nuestra <span className="grad-text">experiencia y trayectoria</span>.
-        </h2>
+        <Reveal>
+          <div className="eyebrow">Referencias &amp; Governance</div>
+          <h2 className="display-sm" style={{ margin: "16px 0 0", maxWidth: "26ch" }}>
+            Nuestra <span className="grad-text">experiencia y trayectoria</span>.
+          </h2>
+        </Reveal>
 
-        <nav className="ref-tabs" role="tablist" aria-label="Referencias">
+        <Reveal delay={120}>
+          <nav className="ref-tabs" role="tablist" aria-label="Referencias">
           {REF_TABS.map((t) => (
             <button
               key={t.key}
@@ -85,17 +89,21 @@ function ReferencesSection() {
               {t.label}
             </button>
           ))}
-        </nav>
+          </nav>
+        </Reveal>
 
         {tab === "casos" && (
           <div className="ref-pane">
-            <p className="ref-intro">
-              Como referencia de nuestra experiencia y trayectoria, compartimos
-              los datos de contacto de algunos de nuestros clientes activos.
-            </p>
+            <Reveal>
+              <p className="ref-intro">
+                Como referencia de nuestra experiencia y trayectoria, compartimos
+                los datos de contacto de algunos de nuestros clientes activos.
+              </p>
+            </Reveal>
             <div className="ref-cards">
-              {CONTACTS.map((c) => (
-                <div className="ref-card" key={c.email}>
+              {CONTACTS.map((c, i) => (
+                <Reveal key={c.email} delay={i * 90}>
+                  <div className="ref-card">
                   <div className="ref-card-top">
                     <span className="ref-dot" />
                     <h3>{c.company}</h3>
@@ -118,7 +126,8 @@ function ReferencesSection() {
                       </dd>
                     </div>
                   </dl>
-                </div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -126,17 +135,21 @@ function ReferencesSection() {
 
         {tab === "politicas" && (
           <div className="ref-pane">
-            <p className="ref-intro">
-              Confidencialidad, protección de datos y propiedad intelectual —
-              los tres pilares que rigen cómo tratamos la información de cada proyecto.
-            </p>
+            <Reveal>
+              <p className="ref-intro">
+                Confidencialidad, protección de datos y propiedad intelectual —
+                los tres pilares que rigen cómo tratamos la información de cada proyecto.
+              </p>
+            </Reveal>
             <div className="policy-grid">
-              {POLICIES.map((p) => (
-                <div className="policy-card" key={p.no}>
+              {POLICIES.map((p, i) => (
+                <Reveal key={p.no} delay={i * 90}>
+                  <div className="policy-card">
                   <span className="policy-no">{p.no}</span>
                   <h3>{p.title}</h3>
                   <p>{p.text}</p>
-                </div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -144,8 +157,11 @@ function ReferencesSection() {
 
         {tab === "soporte" && (
           <div className="ref-pane">
-            <p className="ref-intro">Punto focal del proyecto.</p>
-            <div className="advisor-card">
+            <Reveal>
+              <p className="ref-intro">Punto focal del proyecto.</p>
+            </Reveal>
+            <Reveal delay={100}>
+              <div className="advisor-card">
               <div className="advisor-avatar">
                 {ADVISOR.name
                   .split(" ")
@@ -176,6 +192,7 @@ function ReferencesSection() {
                 </div>
               </div>
             </div>
+            </Reveal>
           </div>
         )}
       </div>
@@ -189,7 +206,7 @@ export default function Home() {
       {/* ================= COMPACT HERO ================= */}
       <section className="ihero ihero-compact">
         <Particles count={54} />
-        <div className="wrap">
+        <div className="wrap ihero-intro">
           <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
           <h1>
             No diseñamos pantallas, <span className="grad-text">Diseñamos experiencias</span>.
@@ -212,22 +229,24 @@ export default function Home() {
       <section className="stats-band stats-band-slim">
         <div className="wrap">
           <div className="stats-slim">
-            <div className="stats-slim-intro">
+            <Reveal className="stats-slim-intro">
               <div className="eyebrow">UiX en números</div>
               <p>
                 La agencia UX/UI para crear experiencias{" "}
                 <span className="grad-text">memorables</span>.
               </p>
-            </div>
+            </Reveal>
             <div className="stats-grid stats-grid-4">
-              {STATS.map((s) => (
-                <div className="stat-cell" key={s.big}>
-                  <img src={s.icon} alt="" className="stat-icon" />
-                  <div className="big grad-text">
-                    <Counter value={s.big} />
+              {STATS.map((s, i) => (
+                <Reveal key={s.big} delay={i * 80}>
+                  <div className="stat-cell">
+                    <img src={s.icon} alt="" className="stat-icon" />
+                    <div className="big grad-text">
+                      <Counter value={s.big} />
+                    </div>
+                    <div className="desc">{s.desc}</div>
                   </div>
-                  <div className="desc">{s.desc}</div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
