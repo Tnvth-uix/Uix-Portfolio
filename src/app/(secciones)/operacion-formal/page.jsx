@@ -2,7 +2,7 @@ import PdfRepository from "../../../components/common/PdfRepository";
 import { OPERACION_FORMAL_DOCS } from "../../../data/documents";
 
 export const metadata = {
-  title: "Operación formal en México — Business Cases By UPAX",
+  title: "Operación formal en México — Portafolio UiX",
 };
 
 export default function OperacionFormalPage() {

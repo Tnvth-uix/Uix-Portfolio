@@ -9,7 +9,7 @@ const CERTS = ["ISO 9001", "NN/g UX", "Google UX", "Baymard"];
 
 /* Company proof — kept intentionally minimal */
 const STATS = [
-  { big: "+90", desc: "Business Cases entregados", icon: "/iconos/trofeo.png" },
+  { big: "+90", desc: "Proyectos entregados", icon: "/iconos/trofeo.png" },
   { big: "+20M", desc: "usuarios en las plataformas UiX", icon: "/iconos/usuario.png" },
   { big: "+9", desc: "años en México y LATAM", icon: "/iconos/reloj.png" },
   { big: "1er", desc: "en LATAM en ser nominada", icon: "/iconos/stars.png" },
@@ -207,7 +207,7 @@ export default function Home() {
       <section className="ihero ihero-compact">
         <Particles count={54} />
         <div className="wrap ihero-intro">
-          <div className="eyebrow">Business Cases · UX/UI · México &amp; LATAM</div>
+          <div className="eyebrow">Portafolio · UX/UI · México &amp; LATAM</div>
           <h1>
             No diseñamos pantallas, <span className="grad-text">Diseñamos experiencias</span>.
           </h1>

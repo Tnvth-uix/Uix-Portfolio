@@ -1,7 +1,7 @@
 import ProjectsCatalog from "../../../components/ProjectsCatalog";
 
 export const metadata = {
-  title: "Dominio del mercado mexicano — Business Cases By UPAX",
+  title: "Dominio del mercado mexicano — Portafolio UiX",
 };
 
 const REPORT_CARD = {
@@ -20,7 +20,7 @@ export default function MercadoMexicanoPage() {
           <span className="grad-text">hábitos de consumo del mercado mexicano</span>
         </h1>
         <p className="hero-lead" style={{ marginTop: 8, maxWidth: "60ch" }}>
-          Business Cases entregados con consumidores mexicanos —incluida nuestra
+          Proyectos entregados con consumidores mexicanos —incluida nuestra
           investigación de deseabilidad—, evidencia directa de nuestro
           conocimiento de la cultura y el comportamiento de compra local.
         </p>

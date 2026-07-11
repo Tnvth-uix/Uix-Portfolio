@@ -52,7 +52,7 @@ function escapeHtml(str) {
 
   Missing/pending data can be marked inline as [PENDIENTE], [TODO] or
   [FALTA: descripción] — these render as clickable chips the viewer can
-  fill in, persisted locally per business case.
+  fill in, persisted locally per project.
 */
 export function parseMarkdown(raw) {
   const text = String(raw).replace(/\r\n/g, "\n").trim();

@@ -28,7 +28,7 @@ export const SECTIONS = [
   },
   {
     n: 7,
-    href: "/business-cases",
+    href: "/experiencia-ux-cx",
     label: "Experiencia previa en proyectos de UX research y/o CX",
   },
   {

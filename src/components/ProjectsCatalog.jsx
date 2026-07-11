@@ -44,7 +44,7 @@ export default function ProjectsCatalog({ only, exclude, extra = [] }) {
           <Link href="/upload" className="deck-card upload">
             <div className="plus">+</div>
             <div>
-              <h3>Nuevo Business Case</h3>
+              <h3>Nuevo proyecto</h3>
               <p>
                 Sube un <strong>.md</strong> y aparecerá aquí junto a los demás.
               </p>

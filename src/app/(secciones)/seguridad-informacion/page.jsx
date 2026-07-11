@@ -2,7 +2,7 @@ import PdfRepository from "../../../components/common/PdfRepository";
 import { SEGURIDAD_INFORMACION_DOCS } from "../../../data/documents";
 
 export const metadata = {
-  title: "Seguridad de la información — Business Cases By UPAX",
+  title: "Seguridad de la información — Portafolio UiX",
 };
 
 export default function SeguridadInformacionPage() {

@@ -3,7 +3,7 @@ import PdfRepository from "../../../components/common/PdfRepository";
 import { TEAM_LEAD, TEAM_REPORTS, TEAM_CV_DOCS } from "../../../data/team";
 
 export const metadata = {
-  title: "Equipo asignado — Business Cases By UPAX",
+  title: "Equipo asignado — Portafolio UiX",
 };
 
 export default function EquipoPage() {

@@ -34,7 +34,7 @@ export default function ProjectPage({ params }) {
             404
           </div>
           <h1 className="display-sm" style={{ margin: "18px 0 24px" }}>
-            No encontramos ese Business Case.
+            No encontramos ese proyecto.
           </h1>
           <div style={{ display: "flex", gap: 14, justifyContent: "center" }}>
             <Link href="/projects" className="btn btn-primary">

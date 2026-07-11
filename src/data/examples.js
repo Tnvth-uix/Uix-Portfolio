@@ -1,5 +1,5 @@
 /*
-  These are the canonical Business Cases — seeded at the code level so
+  These are the canonical project decks — seeded at the code level so
   they're always present regardless of browser/localStorage state.
 */
 

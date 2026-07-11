@@ -99,7 +99,7 @@ export default function UploadPage() {
       router.push(`/projects/${parsed.slug}`);
     } catch (err) {
       setSaving(false);
-      setError(err?.message || "No se pudo guardar el Business Case. Intenta de nuevo.");
+      setError(err?.message || "No se pudo guardar el proyecto. Intenta de nuevo.");
     }
   };
 
@@ -112,14 +112,14 @@ export default function UploadPage() {
   return (
     <main className="up">
       <div className="wrap">
-        <div className="eyebrow">Nuevo Business Case</div>
+        <div className="eyebrow">Nuevo proyecto</div>
         <h1>
           De <span className="grad-text">Markdown</span>
-          <br />a Business Case.
+          <br />a presentación.
         </h1>
         <p className="up-lead">
-          Sube un reporte con la estructura de bloques y lo convertimos en un
-          Business Case editorial de una sola página. Se guarda en este navegador.
+          Sube un reporte con la estructura de bloques y lo convertimos en una
+          presentación editorial de una sola página. Se guarda en este navegador.
         </p>
 
         {/* Dropzone */}
@@ -246,7 +246,7 @@ export default function UploadPage() {
           <p style={{ color: "var(--ink-soft)", marginBottom: 12, fontSize: "0.92rem" }}>
             Usa <strong>[PENDIENTE]</strong>, <strong>[TODO]</strong> o{" "}
             <strong>[FALTA: descripción]</strong> donde falte información. Se
-            muestran como chips clicables dentro del Business Case para
+            muestran como chips clicables dentro de la presentación para
             completarlos ahí mismo.
           </p>
           <pre>{`## Resultados

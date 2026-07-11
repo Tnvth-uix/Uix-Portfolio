@@ -644,7 +644,7 @@ html {
   transition: background 0.6s var(--ease);
 }
 /* Alternating section tone — a subtle shift in background as you scroll
-   from one Business Case section to the next. Translucent so the fixed 3D
+   from one portfolio section to the next. Translucent so the fixed 3D
    backdrop (.scene-bg) bleeds through with a different tint per section. */
 .slide.tone-a {
   background: rgba(244, 246, 251, 0.88);
@@ -1932,7 +1932,7 @@ html {
   right: 0;
 }
 
-/* ---- Compact hero (Business Case focus) ---- */
+/* ---- Compact hero (portfolio focus) ---- */
 .ihero-compact {
   min-height: auto;
   padding: clamp(70px, 12vh, 120px) 0 clamp(56px, 8vh, 90px);
@@ -2220,7 +2220,7 @@ html {
 
 /* ============================================================
    Fullscreen interstitial — a full-bleed photo break between
-   two Business Case sections.
+   two portfolio sections.
    ============================================================ */
 .slide-fullscreen {
   min-height: 100vh;
@@ -2539,6 +2539,91 @@ html {
   pointer-events: none;
 }
 
+/* Splash — logo + particles before the password modal */
+.gate-splash {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: splashEnter 0.9s var(--ease) both;
+}
+.gate-splash-logo {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  animation: splashLogoPulse 2.4s ease-in-out infinite;
+}
+.gate-splash-brand {
+  margin-top: 22px;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--paper);
+  animation: gateFadeUp 0.7s var(--ease) 0.2s both;
+}
+.gate-splash-bar {
+  margin-top: 36px;
+  width: 128px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.gate-splash-bar span {
+  display: block;
+  height: 100%;
+  background: var(--grad);
+  border-radius: inherit;
+  animation: splashBar 2.4s var(--ease) forwards;
+}
+@keyframes splashEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes splashLogoPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 18px rgba(140, 89, 254, 0.45));
+  }
+  50% {
+    transform: scale(1.07);
+    filter: drop-shadow(0 0 32px rgba(0, 196, 179, 0.55));
+  }
+}
+@keyframes splashBar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.gate-card-in {
+  animation: gateCardIn 0.78s var(--ease) both;
+}
+@keyframes gateCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.94);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
 /* Success flash: a quick radial burst from the submit button, timed with
    the checkmark morph, before the iris-wipe exit begins. */
 .gate-flash {
@@ -2708,7 +2793,7 @@ html {
 
 /* ============================================================
    Reduced motion — disable the new decorative one-shot/looping
-   animations added for the cinematic Business Case redesign.
+   animations added for the cinematic portfolio redesign.
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .slide-cover h1,
@@ -2746,10 +2831,15 @@ html {
   .gate-submit,
   .gate-flash,
   .gate-check,
-  .gate-success .gate-card p {
+  .gate-success .gate-card p,
+  .gate-splash,
+  .gate-splash-logo,
+  .gate-splash-bar span,
+  .gate-card-in {
     animation: none !important;
     transition: opacity 0.3s ease !important;
     transform: none !important;
+    filter: none !important;
   }
 
   .reveal {

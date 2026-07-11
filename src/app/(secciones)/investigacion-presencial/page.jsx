@@ -3,7 +3,7 @@ import path from "path";
 import HtmlEmbedWithPdf from "../../../components/common/HtmlEmbedWithPdf";
 
 export const metadata = {
-  title: "Investigación presencial en México — Business Cases By UPAX",
+  title: "Investigación presencial en México — Portafolio UiX",
 };
 
 export default function InvestigacionPresencialPage() {

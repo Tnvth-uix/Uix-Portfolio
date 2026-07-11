@@ -2,7 +2,7 @@ import Link from "next/link";
 import EmbeddedApp from "../../../components/common/EmbeddedApp";
 
 export const metadata = {
-  title: "Investigación de deseabilidad · mercado mexicano — Business Cases By UPAX",
+  title: "Investigación de deseabilidad · mercado mexicano — Portafolio UiX",
 };
 
 export default function InvestigacionMercadoMexicanoPage() {

@@ -1,10 +1,10 @@
 import EmbeddedApp from "../../../components/common/EmbeddedApp";
 
 export const metadata = {
-  title: "Experiencia previa UX research / CX — Business Cases By UPAX",
+  title: "Experiencia previa UX research / CX — Portafolio UiX",
 };
 
-export default function BusinessCasesSectionPage() {
+export default function ExperienciaUxCxPage() {
   return (
     <main className="sec sec-doc">
       <div className="wrap">

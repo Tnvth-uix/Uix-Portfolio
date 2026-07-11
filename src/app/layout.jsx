@@ -7,9 +7,9 @@ import PasswordGate from "../components/PasswordGate";
 import { AuthProvider } from "../contexts/AuthContext";
 
 export const metadata = {
-  title: "Business Cases — By UPAX",
+  title: "Portafolio UiX",
   description:
-    "Casos de negocio UX/UI. Sube un reporte en Markdown y conviértelo en un Business Case.",
+    "Portafolio UX/UI. Sube un reporte en Markdown y conviértelo en una presentación.",
 };
 
 export default function RootLayout({ children }) {
